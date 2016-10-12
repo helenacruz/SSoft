@@ -22,15 +22,10 @@ public class VulnerabilitiesParser implements Parser
         _vulnerabilities = new ArrayList<Vulnerability>();
     }
 
-    private List<Vulnerability> getVulnerabilities()
-    {
-        return _vulnerabilities;
-    }
-
     @Override
     public List result()
     {
-        return getVulnerabilities();
+        return _vulnerabilities;
     }
 
     @Override
@@ -44,15 +39,14 @@ public class VulnerabilitiesParser implements Parser
                 Vulnerability vulnerability = new SQLInjectionVulnerability();
                 parseVulnerability(vulnerability, SQLInjectionFIle);
             }
-
             SQLInjectionFIle.close();
 
             while (XSSFile.readLine() != null) {
                 Vulnerability vulnerability = new XSSVulnerability();
                 parseVulnerability(vulnerability, XSSFile);
             }
-
             XSSFile.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

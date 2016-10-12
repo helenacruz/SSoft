@@ -5,7 +5,6 @@ import tecnico.ssoft.phpsat.core.Vulnerability;
 import tecnico.ssoft.phpsat.core.XSSVulnerability;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import java.util.List;
 
 public class VulnerabilitiesParser implements Parser
 {
-    private static final String SQL_INJECTION = "SQL injection";
-    private static final String XSS = "XSS";
     private static final String SQL_INJECTION_DIR = "docs/sql_injection.txt";
     private static final String XSS_DIR = "docs/xss.txt";
 

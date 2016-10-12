@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="" />
+    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="PHPSAT.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,16 +48,15 @@
       <file leaf-file-name="VulnerabilitiesParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+            <state relative-caret-position="136">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#766#767#0" expanded="true" />
-                <element signature="e#831#832#0" expanded="true" />
-                <element signature="e#891#892#0" expanded="true" />
-                <element signature="e#930#931#0" expanded="true" />
-                <element signature="e#976#977#0" expanded="true" />
-                <element signature="e#1019#1020#0" expanded="true" />
+                <element signature="e#618#619#0" expanded="true" />
+                <element signature="e#683#684#0" expanded="true" />
+                <element signature="e#743#744#0" expanded="true" />
+                <element signature="e#782#783#0" expanded="true" />
+                <element signature="e#828#829#0" expanded="true" />
+                <element signature="e#871#872#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,8 +65,8 @@
       <file leaf-file-name="XSSVulnerability.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/XSSVulnerability.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+            <state relative-caret-position="374">
+              <caret line="25" column="74" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="74" />
               <folding>
                 <element signature="e#398#399#0" expanded="true" />
                 <element signature="e#426#427#0" expanded="true" />
@@ -128,8 +129,8 @@
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/Main.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/SQLInjectionVulnerability.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/XSSVulnerability.java" />
-        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/Parser.java" />
+        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
       </list>
     </option>
   </component>
@@ -574,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476291466783</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="removed some unused constants">
+      <created>1476291641023</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1476291641023</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -626,7 +634,8 @@
     <MESSAGE value="vulnerability parser is complete, works for both sql injection and xss" />
     <MESSAGE value="main is printing all vulnerabilities" />
     <MESSAGE value="created classes for xss and sql injection vulnerabilities" />
-    <option name="LAST_COMMIT_MESSAGE" value="created classes for xss and sql injection vulnerabilities" />
+    <MESSAGE value="removed some unused constants" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed some unused constants" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -782,33 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/XSSVulnerability.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-          <folding>
-            <element signature="e#398#399#0" expanded="true" />
-            <element signature="e#426#427#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#766#767#0" expanded="true" />
-            <element signature="e#831#832#0" expanded="true" />
-            <element signature="e#891#892#0" expanded="true" />
-            <element signature="e#930#931#0" expanded="true" />
-            <element signature="e#976#977#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -823,6 +805,32 @@
           <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#618#619#0" expanded="true" />
+            <element signature="e#683#684#0" expanded="true" />
+            <element signature="e#743#744#0" expanded="true" />
+            <element signature="e#782#783#0" expanded="true" />
+            <element signature="e#828#829#0" expanded="true" />
+            <element signature="e#871#872#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/XSSVulnerability.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="25" column="74" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="74" />
+          <folding>
+            <element signature="e#398#399#0" expanded="true" />
+            <element signature="e#426#427#0" expanded="true" />
           </folding>
         </state>
       </provider>

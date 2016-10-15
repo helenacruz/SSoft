@@ -5,6 +5,7 @@ import tecnico.ssoft.phpsat.core.Vulnerability;
 import tecnico.ssoft.phpsat.core.XSSVulnerability;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,9 +47,14 @@ public class VulnerabilitiesParser implements Parser
                 parseVulnerability(vulnerability, XSSFile);
             }
             XSSFile.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getLocalizedMessage());
+            System.exit(0); // if the program can't find the files than won't work - it ends
+        }
+        catch (IOException e) {
+            System.out.println("Error while reading the files.");
+            System.exit(0);
         }
     }
 

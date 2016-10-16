@@ -1,14 +1,14 @@
 XSS
-$_GET,$_POST,$_COOKIE,$_SERVER
+$_GET,$_POST,$_COOKIE,$_SERVER,$_FILES,$_REQUEST
 echo,print,printf,die,error,exit
 htmlentities,htmlspecialchars,strip_tags,urlencode,san_out
 
 XSS
-$_GET,$_POST,$_COOKIE,$_SERVER
+$_GET,$_POST,$_COOKIE,$_SERVER,$_FILES,$_REQUEST
 file_put_contents
 htmlentities,htmlspecialchars,strip_tags,urlencode,san_wdata
 
 XSS
-$_GET,$_POST,$_COOKIE,$_SERVER
+$_GET,$_POST,$_COOKIE,$_SERVER,$_FILES,$_REQUEST
 file_get_contents
 htmlentities,htmlspecialchars,strip_tags,urlencode,san_rdata

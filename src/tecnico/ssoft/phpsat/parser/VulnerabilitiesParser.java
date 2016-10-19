@@ -17,10 +17,31 @@ public class VulnerabilitiesParser implements Parser
     private static final String XSS_DIR = "docs/xss.txt";
 
     private List<Vulnerability> _vulnerabilities;
+    private List<String> _entryPoints;
+    private List<String> _sanitizationFunctions;
+    private List<String> _sinks;
 
     public VulnerabilitiesParser()
     {
         _vulnerabilities = new ArrayList<Vulnerability>();
+        _entryPoints = new ArrayList<String>();
+        _sanitizationFunctions = new ArrayList<String>();
+        _sinks = new ArrayList<String>();
+    }
+
+    public List<String> getEntryPoints()
+    {
+        return _entryPoints;
+    }
+
+    public List<String> getSanitizationFunctions()
+    {
+        return _sanitizationFunctions;
+    }
+
+    public List<String> getSinks()
+    {
+        return _sinks;
     }
 
     @Override
@@ -72,14 +93,23 @@ public class VulnerabilitiesParser implements Parser
 
         for (String entryPoint : entryPointsArray) {
             vulnerability.addEntryPoint(entryPoint);
+            if (!_entryPoints.contains(entryPoint)) {
+                _entryPoints.add(entryPoint);
+            }
         }
 
         for (String sanitizationFunction : sanitizationFunctionsArray) {
             vulnerability.addSanitizationFunction(sanitizationFunction);
+            if (!_sanitizationFunctions.contains(sanitizationFunction)) {
+                _sanitizationFunctions.add(sanitizationFunction);
+            }
         }
 
         for (String sink : sinksArray) {
             vulnerability.addSink(sink);
+            if (!_sinks.contains(sink)) {
+                _sinks.add(sink);
+            }
         }
 
         _vulnerabilities.add(vulnerability);

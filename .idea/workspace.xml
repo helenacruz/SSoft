@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="rolled back to when it tested the parser" />
-    <list id="4859fc04-0dbc-4d9b-aa78-74cadc72970d" name="Failed commit: Default" comment="added test files">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="rolled back to when it tested the parser">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/SequenceNode.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" afterPath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
     </list>
     <ignored path="PHPSAT.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -919,7 +916,7 @@
       <workItem from="1476804414708" duration="3285000" />
       <workItem from="1476810350751" duration="7068000" />
       <workItem from="1476821764137" duration="623000" />
-      <workItem from="1476879050256" duration="26166000" />
+      <workItem from="1476879050256" duration="26228000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <created>1476135718629</created>
@@ -1040,11 +1037,18 @@
       <option name="project" value="LOCAL" />
       <updated>1476918538303</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="some minor changes">
+      <created>1476918641477</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1476918641477</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53434000" />
+    <option name="totallyTimeSpent" value="53496000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1110,7 +1114,8 @@
     <MESSAGE value="tests the code parser" />
     <MESSAGE value="classes to help the parser of the php files, similar to the nodes of an ast" />
     <MESSAGE value="parses the php code. still a few things missing like variable recognition in sql code and so on" />
-    <option name="LAST_COMMIT_MESSAGE" value="parses the php code. still a few things missing like variable recognition in sql code and so on" />
+    <MESSAGE value="some minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

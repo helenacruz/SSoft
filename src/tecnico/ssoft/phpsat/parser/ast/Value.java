@@ -10,7 +10,7 @@ public class Value extends RightValue
 
     public Value(String value)
     {
-        _value = value;
+        _value = value.trim();
         _variables = new ArrayList<Variable>();
         super.untaint(); // value is the only one that starts untainted
     }

@@ -3,12 +3,14 @@ package tecnico.ssoft.phpsat.parser.ast;
 public class Variable extends RightValue
 {
     private String _name;
+    private boolean _global;
     private Value _value;
 
     public Variable()
     {
         super();
         _name = null;
+        _global = false;
         _value = null;
     }
 
@@ -16,6 +18,15 @@ public class Variable extends RightValue
     {
         super();
         _name = name;
+        _global = false;
+        _value = null;
+    }
+
+    public Variable(String name, boolean global)
+    {
+        super();
+        _name = name;
+        _global = true;
         _value = null;
     }
 
@@ -23,6 +34,7 @@ public class Variable extends RightValue
     {
         super();
         _name = name;
+        _global = false;
         _value = new Value(value);
     }
 

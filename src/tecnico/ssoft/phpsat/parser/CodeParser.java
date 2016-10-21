@@ -12,20 +12,16 @@ public class CodeParser implements Parser
 {
     private String _file;
     private List<Node> _result;
-    private VulnerabilitiesParser _vulnerabilitiesParser;
     private List<String> _entryPoints;
-    private List<String> _sanitizationFunctions;
-    private List<String> _sinks;
 
     public CodeParser(String file)
     {
         _file = file;
-        _result = new ArrayList<Node>();
-        _vulnerabilitiesParser = new VulnerabilitiesParser();
-        _vulnerabilitiesParser.parse();
-        _entryPoints = _vulnerabilitiesParser.getEntryPoints();
-        _sanitizationFunctions = _vulnerabilitiesParser.getSanitizationFunctions();
-        _sinks = _vulnerabilitiesParser.getSinks();
+        _result = new ArrayList<>();
+
+        VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
+        vulnerabilitiesParser.parse();
+        _entryPoints = vulnerabilitiesParser.getEntryPoints();
     }
 
     @Override
@@ -47,15 +43,12 @@ public class CodeParser implements Parser
                 c = (char) i;
                 if (c == '$') {
                     file = doVariable(file);
-                  //  c = (char) file.read();
                 }
                 else if (c == '<') {
                     file = doTags(file);
-                 //   c = (char) file.read();
                 }
                 else if (Character.isAlphabetic(c)) {
                     file = doFunction(file, c);
-                  //  c = (char) file.read();
                 }
             }
 
@@ -279,12 +272,14 @@ public class CodeParser implements Parser
          * - entry point: change the name to its entry point, the rest doesn't really matter
          * - function call: we need to process the args of the function then
          */
-        if (assignment.getRight() instanceof Variable) {
-            Variable variable = (Variable) assignment.getRight();
-            for (String entryPoint : _entryPoints) {
-                if (variable.getName().contains(entryPoint)) {
-                    variable.setName(entryPoint);
-                    return;
+        if (assignment.getRight().isVariable()) {
+            if (assignment.getRight() instanceof Value) {
+                Value value = (Value) assignment.getRight();
+                for (String entryPoint : _entryPoints) {
+                    if (value.getValue().contains(entryPoint)) {
+                        value.addVariable(new Variable(entryPoint, true));
+                        return;
+                    }
                 }
             }
         }

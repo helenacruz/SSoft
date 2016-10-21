@@ -77,6 +77,17 @@ public class Function extends RightValue
         }
     }
 
+    public boolean isThisFunction(List<String> functions)
+    {
+        for (String function : functions) {
+            if (function.equals(_name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public String toString()
     {

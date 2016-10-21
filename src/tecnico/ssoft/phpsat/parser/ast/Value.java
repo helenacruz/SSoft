@@ -12,7 +12,6 @@ public class Value extends RightValue
     {
         _value = value.trim();
         _variables = new ArrayList<Variable>();
-        super.untaint(); // value is the only one that starts untainted
     }
 
     public String getValue()

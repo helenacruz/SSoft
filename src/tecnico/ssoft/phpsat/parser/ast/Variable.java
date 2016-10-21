@@ -4,6 +4,7 @@ public class Variable extends RightValue
 {
     private String _name;
     private boolean _global;
+    private String _globalName;
     private Value _value;
 
     public Variable()
@@ -42,6 +43,26 @@ public class Variable extends RightValue
     public boolean isVariable()
     {
         return true;
+    }
+
+    public boolean isGlobal()
+    {
+        return _global;
+    }
+
+    public void setGlobal(boolean global)
+    {
+        _global = global;
+    }
+
+    public String getGlobalName()
+    {
+        return _globalName;
+    }
+
+    public void setGlobalName(String globalName)
+    {
+        _globalName = globalName;
     }
 
     public String getName()

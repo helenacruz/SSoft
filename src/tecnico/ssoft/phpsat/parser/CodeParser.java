@@ -90,20 +90,29 @@ public class CodeParser implements Parser
         int i;
         char c;
         boolean first = true;
+        boolean function = false;
         String res = "";
 
         while ((i = file.read()) != -1) {
             c = (char) i;
-            if (c == ';') {
+            if (first) {
+                first = false;
+                if (Character.isAlphabetic(c)) {
+                    function = true;
+                    file = doFunction(file, c);
+                }
+            }
+            else if (c == ';') {
                 break;
             }
             res += c;
         }
 
-        Value value = new Value(res);
-        Assignment assignment = new Assignment(variable, value);
-
-        _result.add(assignment);
+        if (!function) {
+            Value value = new Value(res);
+            Assignment assignment = new Assignment(variable, value);
+            _result.add(assignment);
+        }
 
         return file;
     }
@@ -226,7 +235,7 @@ public class CodeParser implements Parser
         while ((i = file.read()) != -1) {
             c = (char) i;
             if (c == '>' || c == ';' || c == '?') {
-                function.addArg(new Value(res));
+                function.addArg(new Variable(res));
                 return file;
             }
             res += c;
@@ -277,7 +286,10 @@ public class CodeParser implements Parser
                 Value value = (Value) assignment.getRight();
                 for (String entryPoint : _entryPoints) {
                     if (value.getValue().contains(entryPoint)) {
-                        value.addVariable(new Variable(entryPoint, true));
+                        Variable variable = new Variable(entryPoint, true);
+                        variable.setGlobalName(entryPoint);
+                        value.addVariable(variable);
+                        assignment.setRight(variable);
                         return;
                     }
                 }
@@ -307,6 +319,16 @@ public class CodeParser implements Parser
             if (rv instanceof Value) {
                 Value value = (Value) rv;
                 args.add(findVariableByName(value.getValue()));
+            }
+            else if (rv instanceof Variable) {
+                Variable variable = (Variable) rv;
+                for (String entryPoint : _entryPoints) {
+                    if (variable.getName().contains(entryPoint)) {
+                        variable.setGlobalName(entryPoint);
+                        variable.setGlobal(true);
+                    }
+                }
+                args.add(variable);
             }
         }
         function.setArgs(args);

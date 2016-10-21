@@ -26,6 +26,12 @@ public class Variable extends RightValue
         _value = new Value(value);
     }
 
+    @Override
+    public boolean isVariable()
+    {
+        return true;
+    }
+
     public String getName()
     {
         return _name;

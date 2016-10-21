@@ -40,6 +40,6 @@ public class Assignment extends Node
     @Override
     public String toString()
     {
-        return "Assignment: " + ((Variable)_left).getName() + " = " + ((Value)_right).getValue();
+        return "ASSIGNMENT: \n" + getLeft().toString() + "\n" + getRight().toString() + "\n";
     }
 }

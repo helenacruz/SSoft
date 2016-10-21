@@ -23,4 +23,6 @@ public abstract class RightValue extends Node
     {
         return _tainted;
     }
+
+    public abstract boolean isVariable();
 }

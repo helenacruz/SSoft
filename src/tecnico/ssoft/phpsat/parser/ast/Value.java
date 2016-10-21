@@ -47,6 +47,12 @@ public class Value extends RightValue
         return !_variables.isEmpty();
     }
 
+    @Override
+    public boolean isVariable()
+    {
+        return _value.charAt(0) == '$';
+    }
+
     public void checkTaint()
     {
         for (Variable variable : _variables) {

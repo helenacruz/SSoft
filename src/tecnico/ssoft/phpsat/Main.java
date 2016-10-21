@@ -16,7 +16,7 @@ public class Main
 
         List<Vulnerability> result = parser.result();
 
-        CodeParser codeParser = new CodeParser("tests/xss_01.txt");
+        CodeParser codeParser = new CodeParser("tests/sqli_05.txt");
         codeParser.parse();
 
         List<Node> result2 = codeParser.result();

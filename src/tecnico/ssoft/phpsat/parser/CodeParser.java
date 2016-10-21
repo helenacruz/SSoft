@@ -12,16 +12,26 @@ public class CodeParser implements Parser
 {
     private String _file;
     private List<Node> _result;
+    private VulnerabilitiesParser _vulnerabilitiesParser;
+    private List<String> _entryPoints;
+    private List<String> _sanitizationFunctions;
+    private List<String> _sinks;
 
     public CodeParser(String file)
     {
         _file = file;
         _result = new ArrayList<Node>();
+        _vulnerabilitiesParser = new VulnerabilitiesParser();
+        _vulnerabilitiesParser.parse();
+        _entryPoints = _vulnerabilitiesParser.getEntryPoints();
+        _sanitizationFunctions = _vulnerabilitiesParser.getSanitizationFunctions();
+        _sinks = _vulnerabilitiesParser.getSinks();
     }
 
     @Override
     public List<Node> result()
     {
+        findVariables();
         return _result;
     }
 
@@ -242,6 +252,136 @@ public class CodeParser implements Parser
                 function.addArg(new Value(arg));
             }
         }
+    }
+
+    private void findVariables()
+    {
+        String[] vars;
+        for (Node node : _result) {
+            if (node instanceof Assignment) {
+                findVariables((Assignment) node);
+            }
+            else if (node instanceof Function) {
+                findVariables((Function) node);
+            }
+            else {
+                System.out.println("Should not happen... what am i?");
+                System.out.println(node.toString());
+            }
+        }
+    }
+
+    private void findVariables(Assignment assignment)
+    {
+        /*
+         * Right can be:
+         * - variable: no more needs to be done
+         * - entry point: change the name to its entry point, the rest doesn't really matter
+         * - function call: we need to process the args of the function then
+         */
+        if (assignment.getRight() instanceof Variable) {
+            Variable variable = (Variable) assignment.getRight();
+            for (String entryPoint : _entryPoints) {
+                if (variable.getName().contains(entryPoint)) {
+                    variable.setName(entryPoint);
+                    return;
+                }
+            }
+        }
+
+        if (assignment.getRight() instanceof Value) {
+            Value value = (Value) assignment.getRight();
+            findVariables(value);
+        }
+
+        if (assignment.getRight() instanceof Function) {
+            Function function = (Function) assignment.getRight();
+            findVariables(function);
+        }
+    }
+
+    private void findVariables(Function function)
+    {
+        if (function.getArgs() == null) {
+            return;
+        }
+
+        List<RightValue> args = new ArrayList<>();
+
+        for (RightValue rv : function.getArgs()) {
+            if (rv instanceof Value) {
+                Value value = (Value) rv;
+                args.add(findVariableByName(value.getValue()));
+            }
+        }
+        function.setArgs(args);
+    }
+
+    private ArrayList<String> splitDollar(String string)
+    {
+        char c;
+        boolean variable = false;
+        int len = string.length();
+        String elem = "";
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < len; i++) {
+            c = string.charAt(i);
+            if (c == '$') {
+                elem += Character.toString(c);
+                variable = true;
+            }
+            else if (c == '"' && variable) {
+                result.add(elem);
+                elem = "";
+                variable = false;
+            }
+            else if (c == '\'' && variable) {
+                result.add(elem);
+                elem = "";
+                variable = false;
+            }
+            else if (variable) {
+                elem += Character.toString(c);
+            }
+        }
+
+        return result;
+    }
+
+    private void findVariables(Value value)
+    {
+        if (value.isVariable())
+            return;
+
+        ArrayList<String> vars = splitDollar(value.getValue());
+
+        for (String string : vars) {
+            value.addVariable(findVariableByName(string));
+        }
+    }
+
+    private Variable findVariableByName(String name)
+    {
+        name = name.substring(1, name.length()).trim();
+
+        for (Node node : _result) {
+            if (node instanceof Assignment) {
+                Assignment assignment = (Assignment) node;
+                if (assignment.getLeft().getName().equals(name)) {
+                    return assignment.getLeft();
+                }
+            }
+
+            if (node instanceof Variable) {
+                Variable variable = (Variable) node;
+                if (variable.getName().equals(name)) {
+                    return variable;
+                }
+            }
+        }
+
+        return new Variable(name);
     }
 
 }

@@ -30,6 +30,12 @@ public class Function extends RightValue
 
     }
 
+    @Override
+    public boolean isVariable()
+    {
+        return false;
+    }
+
     public String getName()
     {
         return _name;

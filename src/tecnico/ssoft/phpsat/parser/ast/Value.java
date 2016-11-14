@@ -5,56 +5,56 @@ import java.util.List;
 
 public class Value extends RightValue
 {
-    private String _value;
-    private List<Variable> _variables;
+    private String value;
+    private List<Variable> variables;
 
     public Value(String value)
     {
-        _value = value.trim();
-        _variables = new ArrayList<Variable>();
+        this.value = value.trim();
+        this.variables = new ArrayList<>();
     }
 
     public String getValue()
     {
-        return _value;
+        return value;
     }
 
     public void setValue(String value)
     {
-        _value = value;
+        value = value;
     }
 
     public List<Variable> getVariables()
     {
-        return _variables;
+        return variables;
     }
 
     public void setVariables(List<Variable> variables)
     {
-        _variables = variables;
+        this.variables = variables;
     }
 
     public void addVariable(Variable variable)
     {
-        _variables.add(variable);
+        variables.add(variable);
         if (variable.isTainted())
             super.taint();
     }
 
     public boolean hasVariables()
     {
-        return !_variables.isEmpty();
+        return !variables.isEmpty();
     }
 
     @Override
     public boolean isVariable()
     {
-        return _value.charAt(0) == '$';
+        return value.charAt(0) == '$';
     }
 
     public void checkTaint()
     {
-        for (Variable variable : _variables) {
+        for (Variable variable : variables) {
             super.untaint();
             if (variable.isTainted()) {
                 super.taint();
@@ -66,9 +66,16 @@ public class Value extends RightValue
     @Override
     public String toString()
     {
-        String res = "Value: " + _value + "\nVars: ";
+        String res = "Value: " + value;
 
-        for (RightValue variable : _variables) {
+        if (isTainted()) {
+            res += " Tainted: true\nArgs:\n";
+        }
+        else {
+            res += " Tainted: false\nArgs:\n";
+        }
+
+        for (RightValue variable : variables) {
             res += variable.toString() + "\n";
         }
 

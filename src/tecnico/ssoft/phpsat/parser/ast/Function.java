@@ -5,28 +5,28 @@ import java.util.List;
 
 public class Function extends RightValue
 {
-    private String _name;
-    private List<RightValue> _args;
+    private String name;
+    private List<RightValue> args;
 
     public Function()
     {
         super();
-        _name = null;
-        _args = new ArrayList<RightValue>();
+        name = null;
+        args = new ArrayList<>();
     }
 
     public Function(String name)
     {
         super();
-        _name = name;
-        _args = new ArrayList<RightValue>();
+        this.name = name;
+        this.args = new ArrayList<>();
     }
 
     public Function(String name, List<RightValue> args)
     {
         super();
-        _name = name;
-        _args = args;
+        this.name = name;
+        this.args = args;
 
     }
 
@@ -38,37 +38,37 @@ public class Function extends RightValue
 
     public String getName()
     {
-        return _name;
+        return name;
     }
 
     public void setName(String name)
     {
-        _name = name;
+        this.name = name;
     }
 
     public List<RightValue> getArgs()
     {
-        return _args;
+        return args;
     }
 
     public void setArgs(List<RightValue> args)
     {
-        _args = args;
+        this.args = args;
     }
 
     public void addArg(RightValue arg)
     {
-        _args.add(arg);
+        this.args.add(arg);
     }
 
     public boolean hasArgs()
     {
-        return !_args.isEmpty();
+        return !args.isEmpty();
     }
 
     public void checkTaint()
     {
-        for (RightValue arg : _args) {
+        for (RightValue arg : args) {
             super.untaint();
             if (arg.isTainted()) {
                 super.taint();
@@ -80,7 +80,7 @@ public class Function extends RightValue
     public boolean isThisFunction(List<String> functions)
     {
         for (String function : functions) {
-            if (function.equals(_name)) {
+            if (function.equals(name)) {
                 return true;
             }
         }
@@ -88,15 +88,17 @@ public class Function extends RightValue
         return false;
     }
 
+
     @Override
     public String toString()
     {
-        String res = "Function: " + _name + "\nArgs: ";
+        String res = "Function: " + name + "\nArgs: ";
 
-        for (RightValue arg : _args) {
+        for (RightValue arg : args) {
             res += arg.toString() + " ";
         }
 
         return res;
     }
+
 }

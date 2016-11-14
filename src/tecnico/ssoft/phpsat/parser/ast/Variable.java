@@ -2,41 +2,42 @@ package tecnico.ssoft.phpsat.parser.ast;
 
 public class Variable extends RightValue
 {
-    private String _name;
-    private boolean _global;
-    private String _globalName;
-    private Value _value;
+    private String name;
+    private boolean global;
+    private String globalName;
+    private Value value;
 
     public Variable()
     {
         super();
-        _name = null;
-        _global = false;
-        _value = null;
+        name = null;
+        global = false;
+        value = null;
     }
 
     public Variable(String name)
     {
         super();
-        _name = name;
-        _global = false;
-        _value = null;
+        this.name = name;
+        this.global = false;
+        this.value = null;
     }
 
     public Variable(String name, boolean global)
     {
         super();
-        _name = name;
-        _global = true;
-        _value = null;
+        this.name = name;
+        this.global = true;
+        this.globalName = name;
+        this.value = null;
     }
 
     public Variable(String name, String value)
     {
         super();
-        _name = name;
-        _global = false;
-        _value = new Value(value);
+        this.name = name;
+        this.global = false;
+        this.value = new Value(value);
     }
 
     @Override
@@ -47,52 +48,68 @@ public class Variable extends RightValue
 
     public boolean isGlobal()
     {
-        return _global;
+        return global;
     }
 
     public void setGlobal(boolean global)
     {
-        _global = global;
+        this.global = global;
     }
 
     public String getGlobalName()
     {
-        return _globalName;
+        return globalName;
     }
 
     public void setGlobalName(String globalName)
     {
-        _globalName = globalName;
+        this.globalName = globalName;
     }
 
     public String getName()
     {
-        return _name;
+        return name;
     }
 
     public void setName(String name)
     {
-        _name = name;
+        this.name = name;
     }
 
     public Value getValue()
     {
-        return _value;
+        return value;
     }
 
     public void setValue(Value value)
     {
-        _value = value;
+        this.value = value;
     }
 
     @Override
     public String toString()
     {
-        if (_value != null) {
-            return "Variable: " + _name + "\nValue:\n" + _value.toString();
+        String result = "Variable: " + name;
+
+        if (value != null) {
+            result += " Value: " + value.toString();
+        }
+        if (globalName != null) {
+            result += " Global name: " + globalName;
+        }
+        if (global) {
+            result += " Global: true";
         }
         else {
-            return "Variable: " + _name;
+            result += " Global: false";
         }
+        if (isTainted()) {
+            result += " Tainted: true";
+        }
+        else {
+            result += " Tainted: false";
+        }
+
+        return result;
     }
 }

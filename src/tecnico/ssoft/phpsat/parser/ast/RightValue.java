@@ -2,26 +2,26 @@ package tecnico.ssoft.phpsat.parser.ast;
 
 public abstract class RightValue extends Node
 {
-    private boolean _tainted;
+    private boolean tainted;
 
     public RightValue()
     {
-        _tainted = true; // default is tainted
+        tainted = true; // default is tainted
     }
 
     public void taint()
     {
-        _tainted = true;
+        tainted = true;
     }
 
     public void untaint()
     {
-        _tainted = false;
+        tainted = false;
     }
 
     public boolean isTainted()
     {
-        return _tainted;
+        return tainted;
     }
 
     public abstract boolean isVariable();

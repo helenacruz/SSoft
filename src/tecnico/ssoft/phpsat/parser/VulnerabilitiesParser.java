@@ -16,38 +16,38 @@ public class VulnerabilitiesParser implements Parser
     private static final String SQL_INJECTION_DIR = "docs/sql_injection.txt";
     private static final String XSS_DIR = "docs/xss.txt";
 
-    private List<Vulnerability> _vulnerabilities;
-    private List<String> _entryPoints;
-    private List<String> _sanitizationFunctions;
-    private List<String> _sinks;
+    private List<Vulnerability> vulnerabilities;
+    private List<String> entryPoints;
+    private List<String> sanitizationFunctions;
+    private List<String> sinks;
 
     public VulnerabilitiesParser()
     {
-        _vulnerabilities = new ArrayList<Vulnerability>();
-        _entryPoints = new ArrayList<String>();
-        _sanitizationFunctions = new ArrayList<String>();
-        _sinks = new ArrayList<String>();
+        vulnerabilities = new ArrayList<>();
+        entryPoints = new ArrayList<>();
+        sanitizationFunctions = new ArrayList<>();
+        sinks = new ArrayList<>();
     }
 
     public List<String> getEntryPoints()
     {
-        return _entryPoints;
+        return entryPoints;
     }
 
     public List<String> getSanitizationFunctions()
     {
-        return _sanitizationFunctions;
+        return sanitizationFunctions;
     }
 
     public List<String> getSinks()
     {
-        return _sinks;
+        return sinks;
     }
 
     @Override
     public List result()
     {
-        return _vulnerabilities;
+        return vulnerabilities;
     }
 
     @Override
@@ -93,25 +93,25 @@ public class VulnerabilitiesParser implements Parser
 
         for (String entryPoint : entryPointsArray) {
             vulnerability.addEntryPoint(entryPoint);
-            if (!_entryPoints.contains(entryPoint)) {
-                _entryPoints.add(entryPoint);
+            if (!this.entryPoints.contains(entryPoint)) {
+                this.entryPoints.add(entryPoint);
             }
         }
 
         for (String sanitizationFunction : sanitizationFunctionsArray) {
             vulnerability.addSanitizationFunction(sanitizationFunction);
-            if (!_sanitizationFunctions.contains(sanitizationFunction)) {
-                _sanitizationFunctions.add(sanitizationFunction);
+            if (!this.sanitizationFunctions.contains(sanitizationFunction)) {
+                this.sanitizationFunctions.add(sanitizationFunction);
             }
         }
 
         for (String sink : sinksArray) {
             vulnerability.addSink(sink);
-            if (!_sinks.contains(sink)) {
-                _sinks.add(sink);
+            if (!this.sinks.contains(sink)) {
+                this.sinks.add(sink);
             }
         }
 
-        _vulnerabilities.add(vulnerability);
+        vulnerabilities.add(vulnerability);
     }
 }

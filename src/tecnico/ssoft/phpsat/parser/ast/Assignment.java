@@ -2,44 +2,50 @@ package tecnico.ssoft.phpsat.parser.ast;
 
 public class Assignment extends Node
 {
-    private Variable _left;
-    private RightValue _right;
+    private Variable left;
+    private RightValue right;
 
     public Assignment()
     {
-        _left = new Variable();
-        _right = null;
+        left = new Variable();
+        right = null;
+    }
+
+    public Assignment(Variable left)
+    {
+        this.left = left;
+        this.right = null;
     }
 
     public Assignment(Variable left, RightValue right)
     {
-        _left = left;
-        _right = right;
+        this.left = left;
+        this.right = right;
     }
 
     public Variable getLeft()
     {
-        return _left;
+        return left;
     }
 
     public RightValue getRight()
     {
-        return _right;
+        return right;
     }
 
     public void setLeft(Variable left)
     {
-        _left = left;
+        this.left = left;
     }
 
     public void setRight(RightValue right)
     {
-        _right = right;
+        this.right = right;
     }
 
     @Override
     public String toString()
     {
-        return "ASSIGNMENT: \n" + getLeft().toString() + "\n" + getRight().toString() + "\n";
+        return "Assignment: " + left.toString() + "\n= " + right.toString() + "\n";
     }
 }

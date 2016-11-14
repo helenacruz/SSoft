@@ -10,25 +10,25 @@ import java.util.List;
 
 public class CodeParser implements Parser
 {
-    private String _file;
-    private List<Node> _result;
-    private List<String> _entryPoints;
+    private String file;
+    private List<Node> result;
+    private List<String> entryPoints;
 
     public CodeParser(String file)
     {
-        _file = file;
-        _result = new ArrayList<>();
+        this.file = file;
+        this.result = new ArrayList<>();
 
         VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
         vulnerabilitiesParser.parse();
-        _entryPoints = vulnerabilitiesParser.getEntryPoints();
+        this.entryPoints = vulnerabilitiesParser.getEntryPoints();
     }
 
     @Override
     public List<Node> result()
     {
         findVariables();
-        return _result;
+        return result;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CodeParser implements Parser
         try {
             int i;
             char c;
-            BufferedReader file = new BufferedReader(new FileReader(_file));
+            BufferedReader file = new BufferedReader(new FileReader(this.file));
 
             while ((i = file.read()) != -1) {
                 c = (char) i;
@@ -48,7 +48,7 @@ public class CodeParser implements Parser
                     file = doTags(file);
                 }
                 else if (Character.isAlphabetic(c)) {
-                    file = doFunction(file, c);
+                    file = doFunction(file, null, c);
                 }
             }
 
@@ -80,7 +80,7 @@ public class CodeParser implements Parser
             res = res.trim();
         }
 
-        _result.add(variable);
+        result.add(variable);
         return file;
     }
 
@@ -92,6 +92,7 @@ public class CodeParser implements Parser
         boolean first = true;
         boolean function = false;
         String res = "";
+        Assignment assignment = new Assignment(variable);
 
         while ((i = file.read()) != -1) {
             c = (char) i;
@@ -99,7 +100,7 @@ public class CodeParser implements Parser
                 first = false;
                 if (Character.isAlphabetic(c)) {
                     function = true;
-                    file = doFunction(file, c);
+                    file = doFunction(file, assignment, c);
                 }
             }
             else if (c == ';') {
@@ -110,8 +111,8 @@ public class CodeParser implements Parser
 
         if (!function) {
             Value value = new Value(res);
-            Assignment assignment = new Assignment(variable, value);
-            _result.add(assignment);
+            assignment.setRight(value);
+            result.add(assignment);
         }
 
         return file;
@@ -181,14 +182,14 @@ public class CodeParser implements Parser
                 file = doTags(file);
             }
             if (Character.isAlphabetic(c)) {
-                file = doFunction(file, c);
+                file = doFunction(file, null, c);
             }
         }
 
         return file;
     }
 
-    private BufferedReader doFunction(BufferedReader file, char c)
+    private BufferedReader doFunction(BufferedReader file, Assignment assignment, char c)
             throws IOException
     {
         int i;
@@ -201,14 +202,13 @@ public class CodeParser implements Parser
             name += c;
             if (name.equals("echo")) {
                 function = new Function(name);
-                _result.add(function);
+                result.add(function);
                 file = doEcho(file, function);
                 return file;
             }
             if (c == ' ' || c == '(') {
                 name = name.substring(0, name.length() - 1);
                 function = new Function(name);
-                _result.add(function);
             }
             if (c == '(') {
                 do {
@@ -218,6 +218,15 @@ public class CodeParser implements Parser
                     }
                 } while (c != ')');
                 doArgs(function, args);
+
+                if (assignment != null) {
+                    assignment.setRight(function);
+                    result.add(assignment);
+                }
+                else {
+                    result.add(function);
+                }
+
                 return file;
             }
         }
@@ -259,7 +268,7 @@ public class CodeParser implements Parser
     private void findVariables()
     {
         String[] vars;
-        for (Node node : _result) {
+        for (Node node : result) {
             if (node instanceof Assignment) {
                 findVariables((Assignment) node);
             }
@@ -284,7 +293,7 @@ public class CodeParser implements Parser
         if (assignment.getRight().isVariable()) {
             if (assignment.getRight() instanceof Value) {
                 Value value = (Value) assignment.getRight();
-                for (String entryPoint : _entryPoints) {
+                for (String entryPoint : entryPoints) {
                     if (value.getValue().contains(entryPoint)) {
                         Variable variable = new Variable(entryPoint, true);
                         variable.setGlobalName(entryPoint);
@@ -322,7 +331,7 @@ public class CodeParser implements Parser
             }
             else if (rv instanceof Variable) {
                 Variable variable = (Variable) rv;
-                for (String entryPoint : _entryPoints) {
+                for (String entryPoint : entryPoints) {
                     if (variable.getName().contains(entryPoint)) {
                         variable.setGlobalName(entryPoint);
                         variable.setGlobal(true);
@@ -382,7 +391,7 @@ public class CodeParser implements Parser
     {
         name = name.substring(1, name.length()).trim();
 
-        for (Node node : _result) {
+        for (Node node : result) {
             if (node instanceof Assignment) {
                 Assignment assignment = (Assignment) node;
                 if (assignment.getLeft().getName().equals(name)) {

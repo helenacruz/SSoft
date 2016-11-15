@@ -244,7 +244,12 @@ public class CodeParser implements Parser
         while ((i = file.read()) != -1) {
             c = (char) i;
             if (c == '>' || c == ';' || c == '?') {
-                function.addArg(new Variable(res));
+                if (!res.contains("$_")) {
+                    function.addArg(findVariableByName(res.replace("$", "")));
+                }
+                else {
+                    function.addArg(findVariableByName(res));
+                }
                 return file;
             }
             res += c;

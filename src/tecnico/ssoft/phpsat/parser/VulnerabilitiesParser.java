@@ -34,16 +34,6 @@ public class VulnerabilitiesParser implements Parser
         return entryPoints;
     }
 
-    public List<String> getSanitizationFunctions()
-    {
-        return sanitizationFunctions;
-    }
-
-    public List<String> getSinks()
-    {
-        return sinks;
-    }
-
     @Override
     public List result()
     {

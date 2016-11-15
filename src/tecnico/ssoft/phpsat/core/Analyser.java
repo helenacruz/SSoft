@@ -10,27 +10,18 @@ import java.util.List;
 
 public class Analyser
 {
-    private boolean vulnerable;
-
     private String result;
-
-    private List<Vulnerability> vulnerabilities;
-    private List<String> sanitizationFunctions;
-    private List<String> sinks;
-
     private List<Node> code;
+    private List<Vulnerability> vulnerabilities;
 
     public Analyser(String file)
             throws IOException
     {
-        vulnerable = false;
         result = "";
 
         VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
         vulnerabilitiesParser.parse();
         vulnerabilities = vulnerabilitiesParser.result();
-        sanitizationFunctions = vulnerabilitiesParser.getSanitizationFunctions();
-        sinks = vulnerabilitiesParser.getSinks();
 
         CodeParser codeParser = new CodeParser(file);
         codeParser.parse();
@@ -39,7 +30,6 @@ public class Analyser
 
     public void analyse()
     {
-        // analyseCode();
         analyseVulnerabilities();
     }
 
@@ -190,6 +180,7 @@ public class Analyser
         result += ".\n";
     }
 
+    /*
     private void printCode()
     {
         System.out.println("START\n");
@@ -238,5 +229,6 @@ public class Analyser
 
         System.out.println("\nEND");
     }
+    */
 
 }

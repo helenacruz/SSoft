@@ -5,15 +5,16 @@ import java.util.List;
 public class Variable extends RightValue
 {
     private String name;
-    private boolean global;
-    private String globalName;
+    private boolean entryPoint;
+    private String entryPointName;
     private Value value;
 
     public Variable()
     {
         super();
         name = null;
-        global = false;
+        entryPoint = false;
+        entryPointName = null;
         value = null;
     }
 
@@ -21,16 +22,26 @@ public class Variable extends RightValue
     {
         super();
         this.name = name;
-        this.global = false;
+        this.entryPoint = false;
+        this.entryPointName = null;
         this.value = null;
     }
 
-    public Variable(String name, boolean global)
+    public Variable(String name, boolean entryPoint)
     {
         super();
         this.name = name;
-        this.global = true;
-        this.globalName = name;
+        this.entryPoint = entryPoint;
+        this.entryPointName = name;
+        this.value = null;
+    }
+
+    public Variable(String name, boolean entryPoint, String entryPointName)
+    {
+        super();
+        this.name = name;
+        this.entryPoint = entryPoint;
+        this.entryPointName = entryPointName;
         this.value = null;
     }
 
@@ -38,7 +49,8 @@ public class Variable extends RightValue
     {
         super();
         this.name = name;
-        this.global = false;
+        this.entryPoint = false;
+        this.entryPointName = null;
         this.value = new Value(value);
     }
 
@@ -48,24 +60,24 @@ public class Variable extends RightValue
         return true;
     }
 
-    public boolean isGlobal()
+    public boolean isEntryPoint()
     {
-        return global;
+        return entryPoint;
     }
 
-    public void setGlobal(boolean global)
+    public void setEntryPoint(boolean entryPoint)
     {
-        this.global = global;
+        this.entryPoint = entryPoint;
     }
 
-    public String getGlobalName()
+    public String getEntryPointName()
     {
-        return globalName;
+        return entryPointName;
     }
 
-    public void setGlobalName(String globalName)
+    public void setEntryPointName(String entryPointName)
     {
-        this.globalName = globalName;
+        this.entryPointName = entryPointName;
     }
 
     public String getName()
@@ -96,10 +108,10 @@ public class Variable extends RightValue
         if (value != null) {
             result += " Value: " + value.toString();
         }
-        if (globalName != null) {
-            result += " Global name: " + globalName;
+        if (entryPointName != null) {
+            result += " Global name: " + entryPointName;
         }
-        if (global) {
+        if (entryPoint) {
             result += " Global: true";
         }
         else {
@@ -121,8 +133,8 @@ public class Variable extends RightValue
             if (entryPoint.equals(name)) {
                 return true;
             }
-            else if (globalName != null) {
-                if (entryPoint.equals(globalName)) {
+            else if (entryPointName != null) {
+                if (entryPoint.equals(entryPointName)) {
                     return true;
                 }
             }
@@ -137,8 +149,8 @@ public class Variable extends RightValue
             if (entryPoint.equals(name)) {
                 return name;
             }
-            else if (globalName != null) {
-                if (entryPoint.equals(globalName)) {
+            else if (entryPointName != null) {
+                if (entryPoint.equals(entryPointName)) {
                     return name;
                 }
             }

@@ -66,17 +66,6 @@ public class Function extends RightValue
         return !args.isEmpty();
     }
 
-    public void checkTaint()
-    {
-        for (RightValue arg : args) {
-            super.untaint();
-            if (arg.isTainted()) {
-                super.taint();
-                break;
-            }
-        }
-    }
-
     public boolean isThisFunction(List<String> functions)
     {
         for (String function : functions) {

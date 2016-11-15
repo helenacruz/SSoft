@@ -4,6 +4,7 @@ import tecnico.ssoft.phpsat.parser.CodeParser;
 import tecnico.ssoft.phpsat.parser.VulnerabilitiesParser;
 import tecnico.ssoft.phpsat.parser.ast.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Analyser
@@ -50,8 +51,6 @@ public class Analyser
 
     private void analyseVulnerabilities()
     {
-        // printCode();
-
         for (Vulnerability vulnerability : vulnerabilities) {
             taintAllVariables(code); // start with everything tainted
 
@@ -61,7 +60,13 @@ public class Analyser
                     RightValue rightValue = assignment.getRight();
                     if (rightValue instanceof Variable) {
                         Variable variable = (Variable) rightValue;
-                        if (variable.isTainted()) {
+                        if (variable.isEntryPoint(vulnerability.getEntryPoints())) {
+                            variable.setGlobal(true);
+                            variable.setGlobalName(variable.getGlobalName());
+                            assignment.getLeft().setGlobal(true);
+                            assignment.getLeft().setGlobalName(variable.getGlobalName());
+                        }
+                        else if (variable.isTainted()) {
                             assignment.getLeft().taint();
                         }
                         else {
@@ -76,9 +81,11 @@ public class Analyser
                         Value value = (Value) rightValue;
                         value.untaint();
                         for (Variable variable : value.getVariables()) {
-                            if (variable.isTainted() ) {
+                            if (variable.isTainted() && variable.isEntryPoint(vulnerability.getEntryPoints())) {
                                 value.taint();
                                 assignment.getLeft().taint();
+                                assignment.getLeft().setGlobal(true);
+                                assignment.getLeft().setGlobalName(variable.getGlobalName());
                                 break;
                             }
                         }
@@ -96,6 +103,8 @@ public class Analyser
                 }
             }
         }
+
+        printCode();
     }
 
     private void taintAllVariables(List<Node> code)
@@ -130,7 +139,7 @@ public class Analyser
 
     private void analyseFunction(Function function, Vulnerability vulnerability)
     {
-        boolean vulnerable = false;
+        List<String> args = new ArrayList<>();
 
         if (function.isThisFunction(vulnerability.getSanitizationFunctions())) {
             for (RightValue rv : function.getArgs()) {
@@ -141,44 +150,30 @@ public class Analyser
         else if (function.isThisFunction(vulnerability.getSinks())) {
             function.untaint();
             for (RightValue rv : function.getArgs()) {
-                if (rv.isTainted()) {
-                    function.taint();
-                    vulnerable = true;
-                }
-            }
-        }
-
-        if (vulnerable) {
-            addVulnerability(function, vulnerability);
-        }
-    }
-
-    private void addVulnerability(Function function, Vulnerability vulnerability)
-    {
-        result += "The code is vulnerable to " + vulnerability.type() + " on function " +
-                function.getName() + " because of the args: ";
-
-        for (RightValue rightValue : function.getArgs()) {
-            if (rightValue instanceof Variable) {
-                Variable variable = (Variable) rightValue;
-                if (variable.isTainted()) {
-                    result += variable.getName() + ", ";
-                }
-            }
-            else if (rightValue instanceof Function) {
-                Function functionArg = (Function) rightValue;
-                if (functionArg.isTainted()) {
-                    result += functionArg.getName() + ", ";
-                }
-            }
-            else if (rightValue instanceof Value) {
-                Value value = (Value) rightValue;
-                for (Variable variable : value.getVariables()) {
-                    if (variable.isTainted()) {
-                        result += variable.getName() + ", ";
+                if (rv instanceof Variable) {
+                    Variable variable = (Variable) rv;
+                    if (variable.isEntryPoint(vulnerability.getEntryPoints()) && variable.isTainted()) {
+                        function.taint();
+                        args.add(variable.getName());
                     }
                 }
             }
+        }
+
+        addVulnerability(function, vulnerability, args);
+    }
+
+    private void addVulnerability(Function function, Vulnerability vulnerability, List<String> args)
+    {
+        if (args.isEmpty()) {
+            return;
+        }
+
+        result += "The code is vulnerable to " + vulnerability.type() + " on function " +
+                function.getName() + " because of the args: ";
+
+        for (String arg : args) {
+            result += arg + ", ";
         }
 
         result = result.substring(0, result.length() - 2);

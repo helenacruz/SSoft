@@ -1,5 +1,7 @@
 package tecnico.ssoft.phpsat.parser.ast;
 
+import java.util.List;
+
 public class Variable extends RightValue
 {
     private String name;
@@ -111,5 +113,37 @@ public class Variable extends RightValue
         }
 
         return result;
+    }
+
+    public boolean isEntryPoint(List<String> entryPoints)
+    {
+        for (String entryPoint : entryPoints) {
+            if (entryPoint.equals(name)) {
+                return true;
+            }
+            else if (globalName != null) {
+                if (entryPoint.equals(globalName)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public String getEntryPoint(List<String> entryPoints)
+    {
+        for (String entryPoint : entryPoints) {
+            if (entryPoint.equals(name)) {
+                return name;
+            }
+            else if (globalName != null) {
+                if (entryPoint.equals(globalName)) {
+                    return name;
+                }
+            }
+        }
+
+        return null;
     }
 }

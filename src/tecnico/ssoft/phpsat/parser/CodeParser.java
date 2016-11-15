@@ -298,7 +298,7 @@ public class CodeParser implements Parser
                 for (String entryPoint : entryPoints) {
                     if (value.getValue().contains(entryPoint)) {
                         Variable variable = new Variable(entryPoint, true);
-                        variable.setGlobalName(entryPoint);
+                        variable.setEntryPointName(entryPoint);
                         value.addVariable(variable);
                         assignment.setRight(variable);
                         return;
@@ -335,8 +335,8 @@ public class CodeParser implements Parser
                 Variable variable = (Variable) rv;
                 for (String entryPoint : entryPoints) {
                     if (variable.getName().contains(entryPoint)) {
-                        variable.setGlobalName(entryPoint);
-                        variable.setGlobal(true);
+                        variable.setEntryPointName(entryPoint);
+                        variable.setEntryPoint(true);
                     }
                 }
                 args.add(variable);
@@ -391,6 +391,14 @@ public class CodeParser implements Parser
 
     private Variable findVariableByName(String name)
     {
+        name = name.replace("[", "");
+
+        for (String entryPoint : entryPoints) {
+            if (name.contains(entryPoint)) {
+                return new Variable(entryPoint, true, entryPoint);
+            }
+        }
+
         name = name.substring(1, name.length()).trim();
 
         for (Node node : result) {

@@ -104,7 +104,7 @@ public class Analyser
             }
         }
 
-        printCode();
+        // printCode();
     }
 
     private void taintAllVariables(List<Node> code)

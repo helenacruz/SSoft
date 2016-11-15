@@ -28,7 +28,7 @@ public class CodeParser implements Parser
     @Override
     public List<Node> result()
     {
-        findVariables(); 
+        findVariables();
         return result;
     }
 

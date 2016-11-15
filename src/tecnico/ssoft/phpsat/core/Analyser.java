@@ -4,6 +4,7 @@ import tecnico.ssoft.phpsat.parser.CodeParser;
 import tecnico.ssoft.phpsat.parser.VulnerabilitiesParser;
 import tecnico.ssoft.phpsat.parser.ast.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Analyser
     private List<Node> code;
 
     public Analyser(String file)
+            throws IOException
     {
         vulnerable = false;
         result = "";
@@ -226,6 +228,7 @@ public class Analyser
                 System.out.println("END FUNCTION\n");
             }
         }
+
         System.out.println("\nEND");
     }
 

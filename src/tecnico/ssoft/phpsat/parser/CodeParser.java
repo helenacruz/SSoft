@@ -15,6 +15,7 @@ public class CodeParser implements Parser
     private List<String> entryPoints;
 
     public CodeParser(String file)
+            throws IOException
     {
         this.file = file;
         this.result = new ArrayList<>();
@@ -33,30 +34,26 @@ public class CodeParser implements Parser
 
     @Override
     public void parse()
+            throws IOException
     {
-        try {
-            int i;
-            char c;
-            BufferedReader file = new BufferedReader(new FileReader(this.file));
+        int i;
+        char c;
+        BufferedReader file = new BufferedReader(new FileReader(this.file));
 
-            while ((i = file.read()) != -1) {
-                c = (char) i;
-                if (c == '$') {
-                    file = doVariable(file);
-                }
-                else if (c == '<') {
-                    file = doTags(file);
-                }
-                else if (Character.isAlphabetic(c)) {
-                    file = doFunction(file, null, c);
-                }
+        while ((i = file.read()) != -1) {
+            c = (char) i;
+            if (c == '$') {
+                file = doVariable(file);
             }
+            else if (c == '<') {
+                file = doTags(file);
+            }
+            else if (Character.isAlphabetic(c)) {
+                file = doFunction(file, null, c);
+            }
+        }
 
-            file.close();
-        }
-        catch (IOException e) {
-            System.out.println(e.getLocalizedMessage());
-        }
+        file.close();
     }
 
     private BufferedReader doVariable(BufferedReader file)

@@ -52,6 +52,7 @@ public class VulnerabilitiesParser implements Parser
 
     @Override
     public void parse()
+            throws IOException
     {
         try {
             BufferedReader SQLInjectionFIle = new BufferedReader(new FileReader(SQL_INJECTION_DIR));

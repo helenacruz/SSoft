@@ -38,7 +38,7 @@ public class Analyser
         if (result.isEmpty()) {
             return "This program is safe.";
         }
-        return result;
+        return result.replace("\n", "");
     }
 
     private void analyseVulnerabilities()

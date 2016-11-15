@@ -62,11 +62,11 @@ public class VulnerabilitiesParser implements Parser
         }
         catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getLocalizedMessage());
-            System.exit(0); // if the program can't find the files than won't work - it ends
+            System.exit(1); // if the program can't find the files than won't work - it ends
         }
         catch (IOException e) {
             System.out.println("Error while reading the files.");
-            System.exit(0);
+            System.exit(1);
         }
     }
 

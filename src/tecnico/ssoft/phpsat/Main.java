@@ -13,14 +13,17 @@ public class Main
             analyser.analyse();
             System.out.println(analyser.result());
         }
-        catch (IOException e) {
-            System.out.println("File not found: arg[0]");
-        }
         catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Missing an argument - please input the name of a file.");
+            System.exit(1);
+        }
+        catch (IOException e) {
+            System.out.println("File not found: " + args[0]);
+            System.exit(1);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 }

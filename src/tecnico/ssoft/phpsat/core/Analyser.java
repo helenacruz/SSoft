@@ -63,10 +63,10 @@ public class Analyser
                     if (rightValue instanceof Variable) {
                         Variable variable = (Variable) rightValue;
                         if (variable.isEntryPoint(vulnerability.getEntryPoints())) {
-                            variable.setGlobal(true);
-                            variable.setGlobalName(variable.getGlobalName());
-                            assignment.getLeft().setGlobal(true);
-                            assignment.getLeft().setGlobalName(variable.getGlobalName());
+                            variable.setEntryPoint(true);
+                            variable.setEntryPointName(variable.getEntryPointName());
+                            assignment.getLeft().setEntryPoint(true);
+                            assignment.getLeft().setEntryPointName(variable.getEntryPointName());
                         }
                         else if (variable.isTainted()) {
                             assignment.getLeft().taint();
@@ -77,7 +77,7 @@ public class Analyser
                     }
                     else if (rightValue instanceof Function) {
                         Function function = (Function) rightValue;
-                        analyseFunction(function, vulnerability);
+                        analyseFunction(function, vulnerability, assignment);
                     }
                     else if (rightValue instanceof Value) {
                         Value value = (Value) rightValue;
@@ -86,8 +86,8 @@ public class Analyser
                             if (variable.isTainted() && variable.isEntryPoint(vulnerability.getEntryPoints())) {
                                 value.taint();
                                 assignment.getLeft().taint();
-                                assignment.getLeft().setGlobal(true);
-                                assignment.getLeft().setGlobalName(variable.getGlobalName());
+                                assignment.getLeft().setEntryPoint(true);
+                                assignment.getLeft().setEntryPointName(variable.getEntryPointName());
                                 break;
                             }
                         }
@@ -101,12 +101,10 @@ public class Analyser
                 }
                 else if (node instanceof Function) {
                     Function function = (Function) node;
-                    analyseFunction(function, vulnerability);
+                    analyseFunction(function, vulnerability, null);
                 }
             }
         }
-
-        // printCode();
     }
 
     private void taintAllVariables(List<Node> code)
@@ -139,7 +137,7 @@ public class Analyser
         }
     }
 
-    private void analyseFunction(Function function, Vulnerability vulnerability)
+    private void analyseFunction(Function function, Vulnerability vulnerability, Assignment assignment)
     {
         List<String> args = new ArrayList<>();
 
@@ -148,15 +146,24 @@ public class Analyser
                 rv.untaint();
             }
             function.untaint();
+            if (assignment != null) {
+                assignment.getLeft().untaint();
+            }
         }
         else if (function.isThisFunction(vulnerability.getSinks())) {
             function.untaint();
+            if (assignment != null) {
+                assignment.getLeft().untaint();
+            }
             for (RightValue rv : function.getArgs()) {
                 if (rv instanceof Variable) {
                     Variable variable = (Variable) rv;
                     if (variable.isEntryPoint(vulnerability.getEntryPoints()) && variable.isTainted()) {
                         function.taint();
                         args.add(variable.getName());
+                        if (assignment != null) {
+                            assignment.getLeft().taint();
+                        }
                     }
                 }
             }

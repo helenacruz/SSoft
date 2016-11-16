@@ -1,11 +1,15 @@
-To run this program use ant:
+To run this program use ant.
 
 ant clean
 ant compile
-ant run
+ant run -Dfile="file-name"
 
-The arguments provided to the program should be the name of the file.
+The argument provided to the program should be the name of the file.
 In our case, and since our files are in the tests folder, the argument
-shoud be:
+should be:
 
-tests/sqli_01.txt
+tests/file-name
+
+Finally, to test sqli_01.txt we should run:
+
+ant run -Dfile="tests/sqli_01.txt"

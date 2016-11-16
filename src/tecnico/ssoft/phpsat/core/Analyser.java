@@ -159,15 +159,13 @@ public class Analyser
             }
         }
 
-        addVulnerability(function, vulnerability, args);
+        if (!args.isEmpty()) {
+            addVulnerability(function, vulnerability, args);
+        }
     }
 
     private void addVulnerability(Function function, Vulnerability vulnerability, List<String> args)
     {
-        if (args.isEmpty()) {
-            return;
-        }
-
         result += "The code is vulnerable to " + vulnerability.type() + " on function " +
                 function.getName() + " because of the args: ";
 

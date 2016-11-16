@@ -23,8 +23,7 @@
         <jar destfile="${jar.dir}/${ant.project.name}.jar"
              basedir="${classes.dir}">
             <manifest>
-                <attribute name="Main-Class"
-                           value="${main-class}"/>
+                <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
         </jar>
     </target>
@@ -32,7 +31,7 @@
     <target name="run" depends="jar">
         <java jar="${jar.dir}/${ant.project.name}.jar"
               fork="true">
-            <arg value="tests/sqli_01.txt"/>
+            <arg value="${file}"/>
         </java>
     </target>
 

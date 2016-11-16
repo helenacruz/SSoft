@@ -7,18 +7,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
-public class CodeParser implements Parser
+public class CodeParser implements PHPSATParser
 {
     private String file;
     private List<Node> result;
     private List<String> entryPoints;
+    private TreeMap<String, Variable> variables;
 
     public CodeParser(String file)
             throws IOException
     {
         this.file = file;
         this.result = new ArrayList<>();
+        this.variables = new TreeMap<>();
 
         VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
         vulnerabilitiesParser.parse();
@@ -68,6 +71,7 @@ public class CodeParser implements Parser
             c = (char) i;
             if (c == '=') {
                 variable = new Variable(res);
+                variables.put(variable.getName(), variable);
                 return doAssignment(file, variable);
             }
             if (c == ';' || c == ',' || c == ')' || c == '\'' || c == '[') {
@@ -269,7 +273,6 @@ public class CodeParser implements Parser
 
     private void findVariables()
     {
-        String[] vars;
         for (Node node : result) {
             if (node instanceof Assignment) {
                 findVariables((Assignment) node);
@@ -298,6 +301,7 @@ public class CodeParser implements Parser
                 for (String entryPoint : entryPoints) {
                     if (value.getValue().contains(entryPoint)) {
                         Variable variable = new Variable(entryPoint, true);
+                        variables.put(variable.getName(), variable);
                         variable.setEntryPointName(entryPoint);
                         value.addVariable(variable);
                         assignment.setRight(variable);
@@ -401,23 +405,14 @@ public class CodeParser implements Parser
 
         name = name.substring(1, name.length()).trim();
 
-        for (Node node : result) {
-            if (node instanceof Assignment) {
-                Assignment assignment = (Assignment) node;
-                if (assignment.getLeft().getName().equals(name)) {
-                    return assignment.getLeft();
-                }
-            }
-
-            if (node instanceof Variable) {
-                Variable variable = (Variable) node;
-                if (variable.getName().equals(name)) {
-                    return variable;
-                }
-            }
+        if (variables.containsKey(name)) {
+            return variables.get(name);
         }
-
-        return new Variable(name);
+        else {
+            Variable variable = new Variable(name);
+            variables.put(variable.getName(), variable);
+            return variable;
+        }
     }
 
 }

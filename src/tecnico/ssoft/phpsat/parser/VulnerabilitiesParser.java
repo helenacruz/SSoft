@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VulnerabilitiesParser implements PHPSATParser
+public class VulnerabilitiesParser
 {
     private static final String SQL_INJECTION_DIR = "docs/sql_injection.txt";
     private static final String XSS_DIR = "docs/xss.txt";
@@ -34,13 +34,11 @@ public class VulnerabilitiesParser implements PHPSATParser
         return entryPoints;
     }
 
-    @Override
     public List result()
     {
         return vulnerabilities;
     }
 
-    @Override
     public void parse()
             throws IOException
     {

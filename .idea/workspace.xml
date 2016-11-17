@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="">
+    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="added a constructor that doesn't receive arguments">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/antlr4_complete.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPSATParser.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Analyser.java" afterPath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Analyser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PHPSAT.iml" afterPath="$PROJECT_DIR$/PHPSAT.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" afterPath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
     </list>
     <ignored path="PHPSAT.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,12 +31,42 @@
     <favorites_list name="PHPSAT" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Analyser.java" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="Analyser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Analyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Value.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VulnerabilitiesParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="520">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CodeParser.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -60,7 +94,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParserTest.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/test/xss.txt" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/test/sql_injection.txt" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/test/VulnerabilitiesParserTest.java" />
@@ -85,12 +118,10 @@
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/CodeVulnerability.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/RightValue.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Assignment.java" />
-        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java" />
         <option value="$PROJECT_DIR$/tests/sqli_02.txt" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/Parser.java" />
         <option value="$PROJECT_DIR$/tests/sqli_01.txt" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Variable.java" />
-        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/src/java/tecnico/ssoft/phpsat/parser/CodeParser.java" />
@@ -111,6 +142,9 @@
         <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/Read me.txt" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java" />
+        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
+        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser2.java" />
       </list>
     </option>
   </component>
@@ -240,7 +274,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -365,6 +398,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -875,70 +909,8 @@
       <workItem from="1479300342386" duration="14444000" />
       <workItem from="1479323179746" duration="242000" />
       <workItem from="1479323655000" duration="339000" />
-      <workItem from="1479325573504" duration="70000" />
-    </task>
-    <task id="LOCAL-00003" summary="added intelliJ project">
-      <created>1476136237015</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1476136237015</updated>
-    </task>
-    <task id="LOCAL-00004" summary="vulnerability parser is complete, works for both sql injection and xss">
-      <created>1476291286432</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1476291286432</updated>
-    </task>
-    <task id="LOCAL-00005" summary="main is printing all vulnerabilities">
-      <created>1476291407429</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1476291407429</updated>
-    </task>
-    <task id="LOCAL-00006" summary="created classes for xss and sql injection vulnerabilities">
-      <created>1476291466783</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1476291466783</updated>
-    </task>
-    <task id="LOCAL-00007" summary="removed some unused constants">
-      <created>1476291641023</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1476291641023</updated>
-    </task>
-    <task id="LOCAL-00008" summary="removed some unnecessary methods and added some spaces to increase readability">
-      <created>1476294049158</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1476294049158</updated>
-    </task>
-    <task id="LOCAL-00009" summary="removed a duplicated method">
-      <created>1476459281925</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1476459281925</updated>
-    </task>
-    <task id="LOCAL-00010" summary="and more intellij stuff">
-      <created>1476459304769</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1476459304769</updated>
-    </task>
-    <task id="LOCAL-00011" summary="simplified a few toString methods">
-      <created>1476532491555</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1476532491555</updated>
+      <workItem from="1479325573504" duration="166000" />
+      <workItem from="1479424930775" duration="942000" />
     </task>
     <task id="LOCAL-00012" summary="changed name">
       <created>1476719221057</created>
@@ -1220,11 +1192,74 @@
       <option name="project" value="LOCAL" />
       <updated>1479323888554</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="added a verification on analyseFunction to see if the args are empty or not.&#10;if they are, then we don't have to add any vulnerability">
+      <created>1479325696997</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1479325696998</updated>
+    </task>
+    <task id="LOCAL-00053" summary="changed the constructor so that it supports the parser generated by antlr">
+      <created>1479425401821</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425401827</updated>
+    </task>
+    <task id="LOCAL-00054" summary="added a constructor that doesn't receive arguments and fixed a bug where we assigned the value to itself instead of this.value">
+      <created>1479425527613</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425527613</updated>
+    </task>
+    <task id="LOCAL-00055" summary="created a php grammar to parse the input files">
+      <created>1479425563656</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425563656</updated>
+    </task>
+    <task id="LOCAL-00056" summary="added a separated lexer grammar">
+      <created>1479425592537</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425592537</updated>
+    </task>
+    <task id="LOCAL-00057" summary="renamed the old codeParser that didn't use antlr">
+      <created>1479425712098</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425712098</updated>
+    </task>
+    <task id="LOCAL-00058" summary="added two more tests">
+      <created>1479425790500</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425790500</updated>
+    </task>
+    <task id="LOCAL-00059" summary="added a listener in order to analyse the results parsed">
+      <created>1479425836598</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425836598</updated>
+    </task>
+    <task id="LOCAL-00060" summary="removed some stuff">
+      <created>1479425875173</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425875173</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125946000" />
+    <option name="totallyTimeSpent" value="126984000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1233,12 +1268,13 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23819979" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32381997" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.50208336" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.49791667" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1255,7 +1291,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32381997" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32933193" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -1276,16 +1311,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <confirmMoveToFailedCommit value="1" />
-    <MESSAGE value="IT WORKS!!!!!!!!!!!!! i'm out" />
-    <MESSAGE value="changed the name of the args from _arg to arg" />
-    <MESSAGE value="fixed a bug on codeParser that would cause the assignments that contained functions to not be saved in the code list" />
-    <MESSAGE value="deleted codeVulnerability since it is no longer needed" />
-    <MESSAGE value="changed the way it is analysing the code. now it's better and simpler. there's still a bug in the sensitive sinks though" />
-    <MESSAGE value="fixed the bug with entryPoints. test xss_02 still isn't working" />
-    <MESSAGE value="fixed a bug that caused the wrong processing of echo function" />
-    <MESSAGE value="this program is now secure" />
-    <MESSAGE value="analyser is now fully working" />
-    <MESSAGE value="added some exceptions. it's done!" />
     <MESSAGE value="tests inline entry points" />
     <MESSAGE value="changed the name global to entry point and added a constructor" />
     <MESSAGE value="Changed the parser to support inline args now.&#10;Basically it checks if the variable is an entry point first and then, if not, looks for the variable." />
@@ -1301,7 +1326,17 @@
     <MESSAGE value="removed unnecessary stuff" />
     <MESSAGE value="added a customizable argument" />
     <MESSAGE value="updated read me" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated read me" />
+    <MESSAGE value="added a verification on analyseFunction to see if the args are empty or not.&#10;if they are, then we don't have to add any vulnerability" />
+    <MESSAGE value="changed the constructor so that it supports the parser generated by antlr" />
+    <MESSAGE value="added a constructor that doesn't receive arguments" />
+    <MESSAGE value="added a constructor that doesn't receive arguments and fixed a bug where we assigned the value to itself instead of this.value" />
+    <MESSAGE value="created a php grammar to parse the input files" />
+    <MESSAGE value="added a separated lexer grammar" />
+    <MESSAGE value="renamed the old codeParser that didn't use antlr" />
+    <MESSAGE value="added two more tests" />
+    <MESSAGE value="added a listener in order to analyse the results parsed" />
+    <MESSAGE value="removed some stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed some stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1325,7 +1360,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/JFlex/examples/interpreter/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/JFlex/src/main/java/jflex/CharClasses.java" />
     <entry file="file://$PROJECT_DIR$/pom.xml" />
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/grammar.g" />
@@ -1403,25 +1437,11 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/tecnico/ssoft/phpsat/Main.java" />
     <entry file="file://$PROJECT_DIR$/settings.gradle" />
     <entry file="file://$PROJECT_DIR$/build.gradle" />
-    <entry file="file://$PROJECT_DIR$/PHPSAT.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/tecnico/ssoft/phpsat/parser/CodeParser.java" />
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Assignment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-196">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1066">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1471,7 +1491,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPGrammar.g4" />
     <entry file="file://$PROJECT_DIR$/tests/xss_02.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -1481,13 +1500,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPParser.java" />
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/LexerPHPGrammar.g4" />
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7866">
-          <caret line="414" column="9" selection-start-line="414" selection-start-column="9" selection-end-line="414" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Variable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1102">
@@ -1517,13 +1529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
@@ -1539,10 +1544,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PHPSAT.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPGrammar.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+        <state relative-caret-position="120">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>

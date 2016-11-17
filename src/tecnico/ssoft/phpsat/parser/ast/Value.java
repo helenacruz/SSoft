@@ -8,6 +8,12 @@ public class Value extends RightValue
     private String value;
     private List<Variable> variables;
 
+    public Value()
+    {
+        value = null;
+        variables = new ArrayList<>();
+    }
+
     public Value(String value)
     {
         this.value = value.trim();
@@ -21,7 +27,7 @@ public class Value extends RightValue
 
     public void setValue(String value)
     {
-        value = value;
+        this.value = value;
     }
 
     public List<Variable> getVariables()

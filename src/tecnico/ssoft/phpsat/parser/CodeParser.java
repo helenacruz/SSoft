@@ -2,417 +2,374 @@ package tecnico.ssoft.phpsat.parser;
 
 import tecnico.ssoft.phpsat.parser.ast.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
-public class CodeParser implements PHPSATParser
+public class CodeParser extends PHPGrammarBaseListener
 {
-    private String file;
-    private List<Node> result;
-    private List<String> entryPoints;
-    private TreeMap<String, Variable> variables;
+    private List<Node> program;
+    private Map<String, Variable> variables;
+    private List<RightValue> args;
 
-    public CodeParser(String file)
-            throws IOException
+    private List<String> entryPoints;
+
+    private Assignment assignment;
+    private Function function;
+    private Value value;
+    private Variable variable;
+    private RightValue rightValue;
+    private String stringValue;
+
+    private boolean inAssignment;
+    private boolean inValue;
+    private boolean inArgs;
+
+    public CodeParser() throws IOException
     {
-        this.file = file;
-        this.result = new ArrayList<>();
-        this.variables = new TreeMap<>();
+        program = new ArrayList<>();
+        variables = new TreeMap<>();
+        args = new ArrayList<>();
 
         VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
         vulnerabilitiesParser.parse();
-        this.entryPoints = vulnerabilitiesParser.getEntryPoints();
+        entryPoints = vulnerabilitiesParser.getEntryPoints();
+
+        assignment = null;
+        function = null;
+        value = null;
+        variable = null;
+        rightValue = null;
+        stringValue = null;
+
+        inAssignment = false;
+        inValue = false;
+        inArgs = false;
     }
 
-    @Override
     public List<Node> result()
     {
-        findVariables();
-        return result;
+        return program;
     }
 
     @Override
-    public void parse()
-            throws IOException
+    public void enterProg(PHPGrammarParser.ProgContext ctx)
     {
-        int i;
-        char c;
-        BufferedReader file = new BufferedReader(new FileReader(this.file));
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            if (c == '$') {
-                file = doVariable(file);
-            }
-            else if (c == '<') {
-                file = doTags(file);
-            }
-            else if (Character.isAlphabetic(c)) {
-                file = doFunction(file, null, c);
-            }
-        }
-
-        file.close();
+        // System.out.println("Enter program");
     }
 
-    private BufferedReader doVariable(BufferedReader file)
-            throws IOException
+    @Override
+    public void exitProg(PHPGrammarParser.ProgContext ctx)
     {
-        int i;
-        char c;
-        String res = "";
-        Variable variable = new Variable();
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            if (c == '=') {
-                variable = new Variable(res);
-                variables.put(variable.getName(), variable);
-                return doAssignment(file, variable);
-            }
-            if (c == ';' || c == ',' || c == ')' || c == '\'' || c == '[') {
-                break;
-            }
-            res += c;
-            res = res.trim();
-        }
-
-        result.add(variable);
-        return file;
+        // System.out.println(program);
+        // System.out.println("Exit program");
     }
 
-    private BufferedReader doAssignment(BufferedReader file, Variable variable)
-            throws IOException
+    @Override
+    public void enterStatements(PHPGrammarParser.StatementsContext ctx)
     {
-        int i;
-        char c;
-        boolean first = true;
-        boolean function = false;
-        String res = "";
-        Assignment assignment = new Assignment(variable);
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            if (first) {
-                first = false;
-                if (Character.isAlphabetic(c)) {
-                    function = true;
-                    file = doFunction(file, assignment, c);
-                }
-            }
-            else if (c == ';') {
-                break;
-            }
-            res += c;
-        }
-
-        if (!function) {
-            Value value = new Value(res);
-            assignment.setRight(value);
-            result.add(assignment);
-        }
-
-        return file;
+        // System.out.println("Enter statements");
     }
 
-    private BufferedReader doTags(BufferedReader file)
-            throws IOException
+    @Override
+    public void exitStatements(PHPGrammarParser.StatementsContext ctx)
     {
-        int i;
-        char c;
-        boolean first = true;
-        int openingTags = 1; // the one that got us here
-        int closingTags = 0; // none yet
-        String res = "";
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            res = res.trim();
-            if (c == '<') {
-                openingTags++;
-            }
-            if (c == '>') {
-                closingTags++;
-            }
-            if (res.length() >= 4) {
-                if (res.substring(res.length() - 4).equals("?php")) {
-                    file = doPHPCode(file);
-                }
-            }
-            if (openingTags == closingTags) {
-                return file;
-            }
-            res += c;
-        }
-
-        return file;
+        // System.out.println("Exit statements");
     }
 
-    private BufferedReader doPHPCode(BufferedReader file)
-            throws IOException
+    @Override
+    public void enterStatement(PHPGrammarParser.StatementContext ctx)
     {
-        int i;
-        char c;
-        String res = "";
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            res += c;
-            res = res.trim();
-
-            if (res.length() >= 1) {
-                if (res.substring(res.length() - 1).equals(">")) {
-                    return file;
-                }
-            }
-            if (res.length() >= 2) {
-                if (res.substring(res.length() - 2).equals("?>")) {
-                    return file;
-                }
-            }
-            if (c == '$') {
-                res = res.substring(0, res.length() - 1);
-                file = doVariable(file);
-            }
-            if (c == '<') {
-                res = res.substring(0, res.length() - 1);
-                file = doTags(file);
-            }
-            if (Character.isAlphabetic(c)) {
-                file = doFunction(file, null, c);
-            }
-        }
-
-        return file;
+        // System.out.println("Enter statement");
     }
 
-    private BufferedReader doFunction(BufferedReader file, Assignment assignment, char c)
-            throws IOException
+    @Override
+    public void exitStatement(PHPGrammarParser.StatementContext ctx)
     {
-        int i;
-        String name = Character.toString(c);
-        String args = "";
-        Function function = new Function();
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            name += c;
-            if (name.equals("echo")) {
-                function = new Function(name);
-                result.add(function);
-                file = doEcho(file, function);
-                return file;
-            }
-            if (c == ' ' || c == '(') {
-                name = name.substring(0, name.length() - 1);
-                function = new Function(name);
-            }
-            if (c == '(') {
-                do {
-                    c = (char) file.read();
-                    if (c != ')') {
-                        args += c;
-                    }
-                } while (c != ')');
-                doArgs(function, args);
-
-                if (assignment != null) {
-                    assignment.setRight(function);
-                    result.add(assignment);
-                }
-                else {
-                    result.add(function);
-                }
-
-                return file;
-            }
-        }
-
-        return file;
+        // System.out.println("Exit statement");
     }
 
-    private BufferedReader doEcho(BufferedReader file, Function function)
-            throws IOException
+    @Override
+    public void enterAssignment(PHPGrammarParser.AssignmentContext ctx)
     {
-        int i;
-        char c;
-        String res = "";
-
-        while ((i = file.read()) != -1) {
-            c = (char) i;
-            if (c == '>' || c == ';' || c == '?') {
-                if (!res.contains("$_")) {
-                    function.addArg(findVariableByName(res.replace("$", "")));
-                }
-                else {
-                    function.addArg(findVariableByName(res));
-                }
-                return file;
-            }
-            res += c;
-        }
-
-        return file;
+        // System.out.println("Enter assignment");
+        assignment = new Assignment();
+        inAssignment = true;
     }
 
-    private void doArgs(Function function, String args)
+    @Override
+    public void exitAssignment(PHPGrammarParser.AssignmentContext ctx)
     {
-        args = args.trim();
-        if (!args.isEmpty()) {
-            String[] argsArray = args.split(",");
-            for (String arg : argsArray) {
-                arg = arg.trim();
-                function.addArg(new Value(arg));
-            }
-        }
+        assignment.setLeft(variable);
+        assignment.setRight(rightValue);
+        program.add(assignment);
+
+        inAssignment = false;
+        assignment = null;
+        variable = null;
+        rightValue = null;
+
+        // System.out.println("Exit assignment");
     }
 
-    private void findVariables()
+    @Override
+    public void enterFunction(PHPGrammarParser.FunctionContext ctx)
     {
-        for (Node node : result) {
-            if (node instanceof Assignment) {
-                findVariables((Assignment) node);
-            }
-            else if (node instanceof Function) {
-                findVariables((Function) node);
-            }
-            else {
-                System.out.println("Should not happen... what am i?");
-                System.out.println(node.toString());
-            }
-        }
+        // System.out.println("Enter function");
+
+        function = new Function();
+        inArgs = true;
     }
 
-    private void findVariables(Assignment assignment)
+    @Override
+    public void exitFunction(PHPGrammarParser.FunctionContext ctx)
     {
-        /*
-         * Right can be:
-         * - variable: no more needs to be done
-         * - entry point: change the name to its entry point, the rest doesn't really matter
-         * - function call: we need to process the args of the function then
-         */
-        if (assignment.getRight().isVariable()) {
-            if (assignment.getRight() instanceof Value) {
-                Value value = (Value) assignment.getRight();
-                for (String entryPoint : entryPoints) {
-                    if (value.getValue().contains(entryPoint)) {
-                        Variable variable = new Variable(entryPoint, true);
-                        variables.put(variable.getName(), variable);
-                        variable.setEntryPointName(entryPoint);
-                        value.addVariable(variable);
-                        assignment.setRight(variable);
-                        return;
-                    }
-                }
-            }
+        if (!inAssignment) {
+            program.add(function);
+        }
+        else {
+            rightValue = function;
         }
 
-        if (assignment.getRight() instanceof Value) {
-            Value value = (Value) assignment.getRight();
-            findVariables(value);
-        }
+        args = new ArrayList<>();
+        inArgs = false;
 
-        if (assignment.getRight() instanceof Function) {
-            Function function = (Function) assignment.getRight();
-            findVariables(function);
-        }
+        // System.out.println("Exit function");
     }
 
-    private void findVariables(Function function)
+    @Override
+    public void enterEcho(PHPGrammarParser.EchoContext ctx)
     {
-        if (function.getArgs() == null) {
-            return;
-        }
+        // System.out.println("Exit echo");
 
-        List<RightValue> args = new ArrayList<>();
+        function.setName("echo");
+    }
 
-        for (RightValue rv : function.getArgs()) {
-            if (rv instanceof Value) {
-                Value value = (Value) rv;
-                args.add(findVariableByName(value.getValue()));
-            }
-            else if (rv instanceof Variable) {
-                Variable variable = (Variable) rv;
-                for (String entryPoint : entryPoints) {
-                    if (variable.getName().contains(entryPoint)) {
-                        variable.setEntryPointName(entryPoint);
-                        variable.setEntryPoint(true);
-                    }
-                }
-                args.add(variable);
-            }
-        }
+    @Override
+    public void exitEcho(PHPGrammarParser.EchoContext ctx)
+    {
         function.setArgs(args);
+        // System.out.println("Exit echo");
     }
 
-    private ArrayList<String> splitDollar(String string)
+    @Override
+    public void enterRegularFunction(PHPGrammarParser.RegularFunctionContext ctx)
     {
-        char c;
-        boolean variable = false;
-        int len = string.length();
-        String elem = "";
-        ArrayList<String> result = new ArrayList<>();
+        // System.out.println("Enter regular function");
 
-        for (int i = 0; i < len; i++) {
-            c = string.charAt(i);
-            if (c == '$') {
-                elem += Character.toString(c);
-                variable = true;
-            }
-            else if (c == '"' && variable) {
-                result.add(elem);
-                elem = "";
-                variable = false;
-            }
-            else if (c == '\'' && variable) {
-                result.add(elem);
-                elem = "";
-                variable = false;
-            }
-            else if (variable) {
-                elem += Character.toString(c);
-            }
+        function.setName(ctx.ID().getText());
+    }
+
+    @Override
+    public void exitRegularFunction(PHPGrammarParser.RegularFunctionContext ctx)
+    {
+        function.setArgs(args);
+        // System.out.println("Exit regular function");
+    }
+
+    @Override
+    public void enterVariable(PHPGrammarParser.VariableContext ctx)
+    {
+        // System.out.println("Enter variable");
+
+        String name = ctx.VAR().getText();
+        Variable var = getVariable(name);
+
+        if (inArgs) {
+            args.add(var);
         }
-
-        return result;
-    }
-
-    private void findVariables(Value value)
-    {
-        if (value.isVariable())
-            return;
-
-        ArrayList<String> vars = splitDollar(value.getValue());
-
-        for (String string : vars) {
-            value.addVariable(findVariableByName(string));
+        else if (inValue) {
+            stringValue += name;
+            value.addVariable(var);
+        }
+        else if (inAssignment) {
+            if (variable == null) { // we're defining left
+                variable = var;
+            }
+            else { // defining right
+                rightValue = var;
+            }
         }
     }
 
-    private Variable findVariableByName(String name)
+    private Variable getVariable(String name)
     {
-        name = name.replace("[", "");
-
         for (String entryPoint : entryPoints) {
-            if (name.contains(entryPoint)) {
-                return new Variable(entryPoint, true, entryPoint);
+            if (entryPoint.equals(name)) {
+                return new Variable(name, true, name);
             }
         }
-
-        name = name.substring(1, name.length()).trim();
 
         if (variables.containsKey(name)) {
             return variables.get(name);
         }
-        else {
-            Variable variable = new Variable(name);
-            variables.put(variable.getName(), variable);
-            return variable;
+
+        Variable variable = new Variable(name);
+        variables.put(name, variable);
+
+        return variable;
+    }
+
+    @Override
+    public void exitVariable(PHPGrammarParser.VariableContext ctx)
+    {
+        // System.out.println("Exit variable");
+    }
+
+    @Override
+    public void enterValue(PHPGrammarParser.ValueContext ctx)
+    {
+        // System.out.println("Enter value");
+        value = new Value();
+        stringValue = "";
+        inValue = true;
+    }
+
+    @Override
+    public void exitValue(PHPGrammarParser.ValueContext ctx)
+    {
+        // System.out.println("Exit value");
+        value.setValue(stringValue);
+        rightValue = value;
+
+        inValue = false;
+        value = null;
+        stringValue = "";
+    }
+
+    @Override
+    public void enterStringValues(PHPGrammarParser.StringValuesContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitStringValues(PHPGrammarParser.StringValuesContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterStringValue(PHPGrammarParser.StringValueContext ctx)
+    {
+        if (ctx.ID() != null) {
+            stringValue += ctx.ID().getText();
         }
+        if (ctx.INT() != null) {
+            stringValue += ctx.INT().getText();
+        }
+        if (ctx.DOT() != null) {
+            stringValue += ctx.DOT().getText();
+        }
+        if (ctx.STAR() != null) {
+            stringValue += ctx.STAR().getText();
+        }
+        if (ctx.EQUAL() != null) {
+            stringValue += ctx.EQUAL().getText();
+        }
+        if (ctx.COMMA() != null) {
+            stringValue += ctx.COMMA().getText();
+        }
+        if (ctx.SINGLE_QUOTE() != null) {
+            stringValue += ctx.SINGLE_QUOTE().getText();
+        }
+        if (ctx.DOUBLE_QUOTES() != null) {
+            stringValue += ctx.DOUBLE_QUOTES().getText();
+        }
+
+        stringValue += " ";
+    }
+
+    @Override
+    public void exitStringValue(PHPGrammarParser.StringValueContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterArgs(PHPGrammarParser.ArgsContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitArgs(PHPGrammarParser.ArgsContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterArg(PHPGrammarParser.ArgContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitArg(PHPGrammarParser.ArgContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterHtml(PHPGrammarParser.HtmlContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitHtml(PHPGrammarParser.HtmlContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterTag(PHPGrammarParser.TagContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitTag(PHPGrammarParser.TagContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterOption(PHPGrammarParser.OptionContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitOption(PHPGrammarParser.OptionContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterHtmlStatements(PHPGrammarParser.HtmlStatementsContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitHtmlStatements(PHPGrammarParser.HtmlStatementsContext ctx)
+    {
+
+    }
+
+    @Override
+    public void enterHtmlStatement(PHPGrammarParser.HtmlStatementContext ctx)
+    {
+
+    }
+
+    @Override
+    public void exitHtmlStatement(PHPGrammarParser.HtmlStatementContext ctx)
+    {
+
     }
 
 }

@@ -1,5 +1,3 @@
-package tecnico.ssoft.phpsat;
-
 import tecnico.ssoft.phpsat.core.Analyser;
 
 import java.io.IOException;

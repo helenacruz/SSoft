@@ -1,9 +1,17 @@
 package tecnico.ssoft.phpsat.core;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 import tecnico.ssoft.phpsat.parser.CodeParser;
+import tecnico.ssoft.phpsat.parser.PHPGrammarLexer;
+import tecnico.ssoft.phpsat.parser.PHPGrammarParser;
 import tecnico.ssoft.phpsat.parser.VulnerabilitiesParser;
 import tecnico.ssoft.phpsat.parser.ast.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +19,7 @@ import java.util.List;
 public class Analyser
 {
     private String result;
-    private List<Node> code;
+    private List<Node> program;
     private List<Vulnerability> vulnerabilities;
 
     public Analyser(String file)
@@ -23,9 +31,19 @@ public class Analyser
         vulnerabilitiesParser.parse();
         vulnerabilities = vulnerabilitiesParser.result();
 
-        CodeParser codeParser = new CodeParser(file);
-        codeParser.parse();
-        code = codeParser.result();
+        FileInputStream inputStream = new FileInputStream(file);
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+
+        PHPGrammarLexer lexer = new PHPGrammarLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        PHPGrammarParser parser = new PHPGrammarParser(tokens);
+        ParseTree tree = parser.prog();
+
+        ParseTreeWalker walker = new ParseTreeWalker();
+        CodeParser listener = new CodeParser();
+        walker.walk(listener, tree);
+
+        program = listener.result();
     }
 
     public void analyse()
@@ -44,9 +62,9 @@ public class Analyser
     private void analyseVulnerabilities()
     {
         for (Vulnerability vulnerability : vulnerabilities) {
-            taintAllVariables(code); // start with everything tainted
+            taintAllVariables(program); // start with everything tainted
 
-            for (Node node : code) {
+            for (Node node : program) {
                 if (node instanceof Assignment) {
                     Assignment assignment = (Assignment) node;
                     RightValue rightValue = assignment.getRight();
@@ -99,7 +117,7 @@ public class Analyser
 
     private void taintAllVariables(List<Node> code)
     {
-        for (Node node : code) {
+        for (Node node : program) {
             if (node instanceof Assignment) {
                 Assignment assignment = (Assignment) node;
                 assignment.getLeft().taint();
@@ -182,7 +200,7 @@ public class Analyser
     private void printCode()
     {
         System.out.println("START\n");
-        for (Node node : code) {
+        for (Node node : program) {
             if (node instanceof Assignment) {
                 System.out.println("START ASSIGNMENT");
                 Assignment assignment = (Assignment) node;

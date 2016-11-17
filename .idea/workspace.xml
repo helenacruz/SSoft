@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="added a constructor that doesn't receive arguments">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/antlr4_complete.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser2.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPSATParser.java" afterPath="" />
+    <list default="true" id="e854a62d-15a1-4431-8fae-588a46ef4b53" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PHPSAT.iml" afterPath="$PROJECT_DIR$/PHPSAT.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" afterPath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java" afterPath="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java" />
     </list>
     <ignored path="PHPSAT.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -65,8 +61,8 @@
       <file leaf-file-name="CodeParser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="-1800">
+              <caret line="214" column="5" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -137,7 +133,6 @@
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPParser.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/PHPGrammar.g4" />
         <option value="$PROJECT_DIR$/tests/xss_02.txt" />
-        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/core/Vulnerability.java" />
         <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/Read me.txt" />
@@ -145,6 +140,7 @@
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/ast/Value.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/VulnerabilitiesParser.java" />
         <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser2.java" />
+        <option value="$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java" />
       </list>
     </option>
   </component>
@@ -910,14 +906,7 @@
       <workItem from="1479323179746" duration="242000" />
       <workItem from="1479323655000" duration="339000" />
       <workItem from="1479325573504" duration="166000" />
-      <workItem from="1479424930775" duration="942000" />
-    </task>
-    <task id="LOCAL-00012" summary="changed name">
-      <created>1476719221057</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1476719221057</updated>
+      <workItem from="1479424930775" duration="1090000" />
     </task>
     <task id="LOCAL-00013" summary="changed attributes">
       <created>1476719258557</created>
@@ -1255,11 +1244,18 @@
       <option name="project" value="LOCAL" />
       <updated>1479425875173</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="removed unnecessary files">
+      <created>1479425908571</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1479425908572</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126984000" />
+    <option name="totallyTimeSpent" value="127132000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1311,7 +1307,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <confirmMoveToFailedCommit value="1" />
-    <MESSAGE value="tests inline entry points" />
     <MESSAGE value="changed the name global to entry point and added a constructor" />
     <MESSAGE value="Changed the parser to support inline args now.&#10;Basically it checks if the variable is an entry point first and then, if not, looks for the variable." />
     <MESSAGE value="There was a bug in the analysis of arguments when the right side was a value, it didn't taint the left side. Now it does!" />
@@ -1336,7 +1331,8 @@
     <MESSAGE value="added two more tests" />
     <MESSAGE value="added a listener in order to analyse the results parsed" />
     <MESSAGE value="removed some stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed some stuff" />
+    <MESSAGE value="removed unnecessary files" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed unnecessary files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1594,8 +1590,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tecnico/ssoft/phpsat/parser/CodeParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="-1800">
+          <caret line="214" column="5" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
           <folding />
         </state>
       </provider>

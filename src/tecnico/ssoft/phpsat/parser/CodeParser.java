@@ -57,44 +57,42 @@ public class CodeParser extends PHPGrammarBaseListener
     @Override
     public void enterProg(PHPGrammarParser.ProgContext ctx)
     {
-        // System.out.println("Enter program");
+
     }
 
     @Override
     public void exitProg(PHPGrammarParser.ProgContext ctx)
     {
-        // System.out.println(program);
-        // System.out.println("Exit program");
+
     }
 
     @Override
     public void enterStatements(PHPGrammarParser.StatementsContext ctx)
     {
-        // System.out.println("Enter statements");
+
     }
 
     @Override
     public void exitStatements(PHPGrammarParser.StatementsContext ctx)
     {
-        // System.out.println("Exit statements");
+
     }
 
     @Override
     public void enterStatement(PHPGrammarParser.StatementContext ctx)
     {
-        // System.out.println("Enter statement");
+
     }
 
     @Override
     public void exitStatement(PHPGrammarParser.StatementContext ctx)
     {
-        // System.out.println("Exit statement");
+
     }
 
     @Override
     public void enterAssignment(PHPGrammarParser.AssignmentContext ctx)
     {
-        // System.out.println("Enter assignment");
         assignment = new Assignment();
         inAssignment = true;
     }
@@ -110,15 +108,11 @@ public class CodeParser extends PHPGrammarBaseListener
         assignment = null;
         variable = null;
         rightValue = null;
-
-        // System.out.println("Exit assignment");
     }
 
     @Override
     public void enterFunction(PHPGrammarParser.FunctionContext ctx)
     {
-        // System.out.println("Enter function");
-
         function = new Function();
         inArgs = true;
     }
@@ -135,15 +129,11 @@ public class CodeParser extends PHPGrammarBaseListener
 
         args = new ArrayList<>();
         inArgs = false;
-
-        // System.out.println("Exit function");
     }
 
     @Override
     public void enterEcho(PHPGrammarParser.EchoContext ctx)
     {
-        // System.out.println("Exit echo");
-
         function.setName("echo");
     }
 
@@ -151,14 +141,11 @@ public class CodeParser extends PHPGrammarBaseListener
     public void exitEcho(PHPGrammarParser.EchoContext ctx)
     {
         function.setArgs(args);
-        // System.out.println("Exit echo");
     }
 
     @Override
     public void enterRegularFunction(PHPGrammarParser.RegularFunctionContext ctx)
     {
-        // System.out.println("Enter regular function");
-
         function.setName(ctx.ID().getText());
     }
 
@@ -166,14 +153,11 @@ public class CodeParser extends PHPGrammarBaseListener
     public void exitRegularFunction(PHPGrammarParser.RegularFunctionContext ctx)
     {
         function.setArgs(args);
-        // System.out.println("Exit regular function");
     }
 
     @Override
     public void enterVariable(PHPGrammarParser.VariableContext ctx)
     {
-        // System.out.println("Enter variable");
-
         String name = ctx.VAR().getText();
         Variable var = getVariable(name);
 
@@ -215,13 +199,12 @@ public class CodeParser extends PHPGrammarBaseListener
     @Override
     public void exitVariable(PHPGrammarParser.VariableContext ctx)
     {
-        // System.out.println("Exit variable");
+
     }
 
     @Override
     public void enterValue(PHPGrammarParser.ValueContext ctx)
     {
-        // System.out.println("Enter value");
         value = new Value();
         stringValue = "";
         inValue = true;
@@ -230,7 +213,6 @@ public class CodeParser extends PHPGrammarBaseListener
     @Override
     public void exitValue(PHPGrammarParser.ValueContext ctx)
     {
-        // System.out.println("Exit value");
         value.setValue(stringValue);
         rightValue = value;
 

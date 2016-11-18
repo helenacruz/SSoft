@@ -60,11 +60,6 @@ public class Variable extends RightValue
         return true;
     }
 
-    public boolean isEntryPoint()
-    {
-        return entryPoint;
-    }
-
     public void setEntryPoint(boolean entryPoint)
     {
         this.entryPoint = entryPoint;
@@ -123,6 +118,12 @@ public class Variable extends RightValue
         else {
             result += " Tainted: false";
         }
+        if (isSanitized()) {
+            result += " Sanitized by " + getSanitizationFunctions();
+        }
+        else {
+            result += " Not sanitized.";
+        }
 
         return result;
     }
@@ -133,10 +134,16 @@ public class Variable extends RightValue
             if (entryPoint.equals(name)) {
                 return true;
             }
-            else if (entryPointName != null) {
-                if (entryPoint.equals(entryPointName)) {
-                    return true;
-                }
+        }
+
+        return false;
+    }
+
+    public boolean comesFromEntryPoint(List<String> entryPoints)
+    {
+        for (String entryPoint : entryPoints) {
+            if (entryPoint.equals(entryPointName)) {
+                return true;
             }
         }
 

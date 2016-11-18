@@ -22,6 +22,8 @@ public class Analyser
     private List<Node> program;
     private List<Vulnerability> vulnerabilities;
 
+    private boolean vulnerable;
+
     public Analyser(String file)
             throws IOException
     {
@@ -44,6 +46,8 @@ public class Analyser
         walker.walk(listener, tree);
 
         program = listener.result();
+
+        vulnerable = false;
     }
 
     public void analyse()
@@ -53,9 +57,6 @@ public class Analyser
 
     public String result()
     {
-        if (result.isEmpty()) {
-            return "This program is safe.";
-        }
         return result.replace("\n", "");
     }
 
@@ -73,14 +74,19 @@ public class Analyser
                         if (variable.isEntryPoint(vulnerability.getEntryPoints())) {
                             variable.setEntryPoint(true);
                             variable.setEntryPointName(variable.getEntryPointName());
+                            variable.taint();
+                            assignment.getLeft().taint();
                             assignment.getLeft().setEntryPoint(true);
                             assignment.getLeft().setEntryPointName(variable.getEntryPointName());
+                            assignment.getLeft().resetSanitizationFunctions();
                         }
                         else if (variable.isTainted()) {
                             assignment.getLeft().taint();
+                            assignment.getLeft().resetSanitizationFunctions();
                         }
                         else {
                             assignment.getLeft().untaint();
+                            assignment.getLeft().addSanitizationFunction(variable.getSanitizationFunctions());
                         }
                     }
                     else if (rightValue instanceof Function) {
@@ -91,7 +97,8 @@ public class Analyser
                         Value value = (Value) rightValue;
                         value.untaint();
                         for (Variable variable : value.getVariables()) {
-                            if (variable.isTainted() && variable.isEntryPoint(vulnerability.getEntryPoints())) {
+                            if (variable.isTainted() && variable.comesFromEntryPoint(vulnerability.getEntryPoints())
+                                    && !variable.isSanitized()) {
                                 value.taint();
                                 assignment.getLeft().taint();
                                 assignment.getLeft().setEntryPoint(true);
@@ -101,9 +108,13 @@ public class Analyser
                         }
                         if (value.isTainted()) {
                             assignment.getLeft().taint();
+                            assignment.getLeft().resetSanitizationFunctions();
                         }
                         else {
                             assignment.getLeft().untaint();
+                            for (Variable variable : value.getVariables()) {
+                                assignment.getLeft().addSanitizationFunction(variable.getSanitizationFunctions());
+                            }
                         }
                     }
                 }
@@ -152,25 +163,32 @@ public class Analyser
         if (function.isThisFunction(vulnerability.getSanitizationFunctions())) {
             for (RightValue rv : function.getArgs()) {
                 rv.untaint();
+                rv.addSanitizationFunction(function.getName());
             }
             function.untaint();
             if (assignment != null) {
                 assignment.getLeft().untaint();
+                assignment.getLeft().addSanitizationFunction(function.getName());
             }
         }
         else if (function.isThisFunction(vulnerability.getSinks())) {
-            function.untaint();
-            if (assignment != null) {
-                assignment.getLeft().untaint();
-            }
             for (RightValue rv : function.getArgs()) {
                 if (rv instanceof Variable) {
                     Variable variable = (Variable) rv;
-                    if (variable.isEntryPoint(vulnerability.getEntryPoints()) && variable.isTainted()) {
+                    if ((variable.comesFromEntryPoint(vulnerability.getEntryPoints()) ||
+                            variable.isEntryPoint(vulnerability.getEntryPoints()))
+                            && variable.isTainted()) {
                         function.taint();
                         args.add(variable.getName());
                         if (assignment != null) {
                             assignment.getLeft().taint();
+                        }
+                    }
+                    else if (!variable.getSanitizationFunctions().isEmpty()) {
+                        assignment.getRight().addSanitizationFunction(rv.getSanitizationFunctions());
+                        if (!vulnerable) { // if it is already vulnerable then sanitizing something else won't make it safe
+                            result += "The code is safe because of the sanitization functions: " +
+                                    assignment.getRight().sanitizationFunctionsToString() + ".";
                         }
                     }
                 }
@@ -178,6 +196,7 @@ public class Analyser
         }
 
         if (!args.isEmpty()) {
+            vulnerable = true;
             addVulnerability(function, vulnerability, args);
         }
     }
@@ -196,7 +215,7 @@ public class Analyser
         result += ".\n";
     }
 
-    /*
+
     private void printCode()
     {
         System.out.println("START\n");
@@ -245,6 +264,6 @@ public class Analyser
 
         System.out.println("\nEND");
     }
-    */
+
 
 }

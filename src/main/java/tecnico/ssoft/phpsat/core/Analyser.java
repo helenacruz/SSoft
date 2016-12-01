@@ -18,7 +18,8 @@ import java.util.List;
 
 public class Analyser
 {
-    private String result;
+    private String safeResult;
+    private String unsafeResult;
     private List<Node> program;
     private List<Vulnerability> vulnerabilities;
 
@@ -27,7 +28,8 @@ public class Analyser
     public Analyser(String file)
             throws IOException
     {
-        result = "";
+        safeResult = "";
+        unsafeResult = "";
 
         VulnerabilitiesParser vulnerabilitiesParser = new VulnerabilitiesParser();
         vulnerabilitiesParser.parse();
@@ -46,7 +48,6 @@ public class Analyser
         walker.walk(listener, tree);
 
         program = listener.result();
-
         vulnerable = false;
     }
 
@@ -57,7 +58,15 @@ public class Analyser
 
     public String result()
     {
-        return result.replace("\n", "");
+        if (vulnerable) {
+            return unsafeResult.replace("\n", " ");
+        }
+        else {
+            if (safeResult.equals("")) {
+                return "The code is safe";
+            }
+            return safeResult.replace("\n", " ");
+        }
     }
 
     private void analyseVulnerabilities()
@@ -187,7 +196,7 @@ public class Analyser
                     else if (!variable.getSanitizationFunctions().isEmpty()) {
                         assignment.getRight().addSanitizationFunction(rv.getSanitizationFunctions());
                         if (!vulnerable) { // if it is already vulnerable then sanitizing something else won't make it safe
-                            result += "The code is safe because of the sanitization functions: " +
+                            safeResult += "The code is safe because of the sanitization functions: " +
                                     assignment.getRight().sanitizationFunctionsToString() + ".";
                         }
                     }
@@ -203,19 +212,19 @@ public class Analyser
 
     private void addVulnerability(Function function, Vulnerability vulnerability, List<String> args)
     {
-        result += "The code is vulnerable to " + vulnerability.type() + " on function " +
+        unsafeResult += "The code is vulnerable to " + vulnerability.type() + " on function " +
                 function.getName() + " because of the args: ";
 
         for (String arg : args) {
-            result += arg + ", ";
+            unsafeResult += arg + ", ";
         }
 
-        result = result.substring(0, result.length() - 2);
+        unsafeResult = unsafeResult.substring(0, unsafeResult.length() - 2);
 
-        result += ".\n";
+        unsafeResult += ".\n";
     }
 
-
+    /*
     private void printCode()
     {
         System.out.println("START\n");
@@ -264,6 +273,6 @@ public class Analyser
 
         System.out.println("\nEND");
     }
-
+    */
 
 }

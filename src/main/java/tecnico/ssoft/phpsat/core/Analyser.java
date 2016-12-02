@@ -169,6 +169,13 @@ public class Analyser
     {
         List<String> args = new ArrayList<>();
 
+        for (RightValue rv : function.getArgs()) {
+            if (rv instanceof Function) {
+                Function functionArg = (Function) rv;
+                analyseFunction(functionArg, vulnerability, null);
+            }
+        }
+
         if (function.isThisFunction(vulnerability.getSanitizationFunctions())) {
             function.untaint();
             if (assignment != null) {

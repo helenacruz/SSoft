@@ -171,7 +171,6 @@ public class Analyser
 
         if (function.isThisFunction(vulnerability.getSanitizationFunctions())) {
             for (RightValue rv : function.getArgs()) {
-                rv.untaint();
                 rv.addSanitizationFunction(function.getName());
             }
             function.untaint();
@@ -194,10 +193,12 @@ public class Analyser
                         }
                     }
                     else if (!variable.getSanitizationFunctions().isEmpty()) {
-                        assignment.getRight().addSanitizationFunction(rv.getSanitizationFunctions());
+                        if (assignment != null) {
+                            assignment.getRight().addSanitizationFunction(rv.getSanitizationFunctions());
+                        }
                         if (!vulnerable) { // if it is already vulnerable then sanitizing something else won't make it safe
                             safeResult += "The code is safe because of the sanitization functions: " +
-                                    assignment.getRight().sanitizationFunctionsToString() + ".";
+                                    variable.sanitizationFunctionsToString() + ".";
                         }
                     }
                 }
@@ -224,7 +225,7 @@ public class Analyser
         unsafeResult += ".\n";
     }
 
-    /*
+
     private void printCode()
     {
         System.out.println("START\n");
@@ -273,6 +274,6 @@ public class Analyser
 
         System.out.println("\nEND");
     }
-    */
+
 
 }

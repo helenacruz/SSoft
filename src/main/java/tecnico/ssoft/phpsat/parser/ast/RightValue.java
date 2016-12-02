@@ -1,7 +1,6 @@
 package tecnico.ssoft.phpsat.parser.ast;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class RightValue extends Node
 {
@@ -31,7 +30,9 @@ public abstract class RightValue extends Node
 
     public void addSanitizationFunction(String sanitizationFunction)
     {
-        sanitizationFunctions.add(sanitizationFunction);
+        if (!this.sanitizationFunctions.contains(sanitizationFunction)) {
+            this.sanitizationFunctions.add(sanitizationFunction);
+        }
     }
 
     public void addSanitizationFunction(List<String> sanitizationFunctions)

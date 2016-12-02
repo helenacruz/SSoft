@@ -170,9 +170,6 @@ public class Analyser
         List<String> args = new ArrayList<>();
 
         if (function.isThisFunction(vulnerability.getSanitizationFunctions())) {
-            for (RightValue rv : function.getArgs()) {
-                rv.addSanitizationFunction(function.getName());
-            }
             function.untaint();
             if (assignment != null) {
                 assignment.getLeft().untaint();

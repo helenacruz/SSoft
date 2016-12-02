@@ -1,3 +1,15 @@
+Software Security
+2016 - 2017
+
+PHPSAT - PHP Static Analysis Tool
+
+Group 6
+67011 - João Santos
+76528 - Bernardo Rato
+78190 - Helena Cruz
+
+------------------------------------------
+
 To run this program use maven.
 
 mvn clean

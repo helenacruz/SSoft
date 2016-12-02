@@ -1,0 +1,6 @@
+$nis=$_POST['nis'];
+$pwd=$_POST['pwd'];
+$nis=mysql_real_escape_string($nis);
+$pwd=mysql_real_escape_string($pwd);
+$query="SELECT * FROM siswa WHERE nis='$nis' AND pwd='$pwd'";
+$q=mysql_query($query,$koneksi);
